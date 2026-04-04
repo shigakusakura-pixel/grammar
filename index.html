@@ -1,0 +1,405 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.eg{font-family:'Hiragino Kaku Gothic ProN',Meiryo,sans-serif;background:#f0f4f8}
+.hd{background:#1a5fa8;color:#fff;padding:14px 20px 0}
+.ti{font-size:26px;font-weight:500;letter-spacing:.06em;margin-bottom:8px;text-shadow:-1px -1px 0 #0a3d7a,1px -1px 0 #0a3d7a,-1px 1px 0 #0a3d7a,1px 1px 0 #0a3d7a}
+.hb{display:flex;justify-content:space-between;align-items:flex-end}
+.tb{padding:7px 20px;border-radius:8px 8px 0 0;font-size:13px;cursor:pointer;background:rgba(255,255,255,.18);color:#ffd580;border:none;font-family:inherit}
+.tb.a{background:#fff;color:#e8730a;font-weight:500}
+.sm{font-size:12px;color:#ffd580;padding:4px 10px 6px;opacity:.9}
+.mn{display:flex;gap:14px;padding:14px}
+.sb{width:178px;flex-shrink:0}
+.st{font-size:11px;color:#666;padding:4px 10px 5px}
+.nv{display:block;width:100%;padding:6px 12px;font-size:12.5px;color:#555;border-radius:6px;cursor:pointer;background:none;border:none;text-align:left;font-family:inherit;line-height:1.4}
+.nv.a{background:#1a5fa8;color:#fff}
+.nv:hover:not(.a){background:rgba(0,0,0,.05)}
+.ct{flex:1;min-width:0}
+.lh{background:#1a5fa8;color:#fff;padding:11px 18px;border-radius:10px 10px 0 0;font-size:15px;font-weight:500}
+.lb{background:#fff;border:1px solid #d0d8e8;border-radius:0 0 10px 10px;padding:16px 18px}
+.stb-bar{display:flex;gap:3px;margin-bottom:0;border-bottom:2px solid #1a5fa8;padding-bottom:0}
+.stb{padding:8px 18px;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:400;border-radius:8px 8px 0 0;background:#e8f1fb;color:#1a5fa8;margin-bottom:-2px}
+.stb.a{background:#1a5fa8;color:white;font-weight:500}
+.stb:hover:not(.a){background:#d0e4f7}
+.stc{padding-top:14px}
+.g{background:#e8f1fb;border-left:4px solid #1a5fa8;border-radius:0 8px 8px 0;padding:11px 15px;margin-bottom:13px}
+.gl{font-size:11px;font-weight:500;color:#1a5fa8;letter-spacing:.08em;margin-bottom:6px}
+.gs{font-size:14px;line-height:2.1;color:#222}
+.gn{font-size:13px;color:#333;margin-top:6px;line-height:1.75}
+.e{color:#1a5fa8;font-weight:500}.j{color:#666;font-size:13px;margin-left:4px}.k{color:#c0392b}
+.pt{background:#fff3cd;border:1px solid #f0c040;border-radius:8px;padding:9px 14px;margin-bottom:13px}
+.pb{display:inline-block;background:#f0c040;color:#5a4200;font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;margin-bottom:5px}
+.px{font-size:13px;color:#856404;line-height:1.75;display:block}
+.ifo{background:#f2faf2;border:1px solid #5aaa5a;border-radius:8px;padding:10px 14px;margin-bottom:13px;font-size:13px;color:#2e5d2e;line-height:1.75}
+.ch{background:#fff8e1;border:1px solid #f9a825;border-radius:6px;padding:7px 12px;margin-bottom:12px;font-size:12px;color:#5d4037;line-height:1.7}
+.hs{background:#f2faf2;border:1px solid #5aaa5a;border-radius:6px;padding:7px 12px;margin-bottom:12px;font-size:12px;color:#2e5d2e;line-height:1.7}
+.xb{display:inline-block;color:#fff;font-size:10px;font-weight:500;padding:1px 6px;border-radius:3px;margin-right:5px}
+.ip{background:#fff0f0;border:1px solid #e74c3c;border-radius:8px;padding:8px 13px;margin-bottom:13px;font-size:13px;color:#333;line-height:1.7}
+.ql{font-size:13px;font-weight:500;color:#222;margin:4px 0 9px;padding-bottom:4px;border-bottom:1.5px solid #1a5fa8;display:inline-block}
+.qi{margin-bottom:3px}.qr{display:flex;align-items:center;gap:8px}
+.qn{background:#1a5fa8;color:#fff;font-size:11px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qt{flex:1;font-size:14px;color:#222;line-height:1.7}
+.ab{font-size:12px;padding:3px 11px;border:1px solid #1a5fa8;border-radius:5px;color:#1a5fa8;background:#fff;cursor:pointer;font-family:inherit;flex-shrink:0;white-space:nowrap}
+.ab:hover{background:#e8f1fb}
+.aa{font-size:13px;color:#c0392b;margin:2px 0 9px 28px;display:none}
+.aa.v{display:block}
+.q2{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;margin-bottom:10px}
+.dv{height:1px;background:#d0d8e8;margin:14px 0}
+.nt{background:#eaf2ff;border:1px solid #b3cff0;border-radius:8px;padding:10px 14px;font-size:13px;color:#2c4a72;margin-top:12px;line-height:1.7}
+.nx{color:#1a5fa8;font-weight:500}
+.sn{padding:40px;text-align:center;color:#999;font-size:14px}
+.t1{width:100%;border-collapse:collapse;margin-bottom:13px;font-size:12.5px}
+.t1 th{background:#1a5fa8;color:#fff;padding:7px 10px;text-align:center;font-weight:500;border:1px solid #1a5fa8}
+.t1 td{padding:6px 10px;border:1px solid #d0d8e8;color:#333}
+.t1 tr:nth-child(even) td{background:#f5f8ff}
+.t1 .rd{color:#c0392b;font-weight:500}
+.t2{width:100%;border-collapse:collapse;margin-bottom:13px;font-size:12px}
+.t2 th{background:#1a5fa8;color:#fff;padding:5px 8px;text-align:center;font-weight:500;border:1px solid #1a5fa8}
+.t2 td{padding:5px 8px;border:1px solid #d0d8e8;color:#333;text-align:center}
+.t2 .lb2{font-size:11px;color:#666;background:#f8f8f8;text-align:left}
+.t2 .en{color:#1a5fa8;font-weight:500}
+.vc{background:#f2faf2;border:1px solid #5aaa5a;border-radius:8px;padding:10px 14px;margin-bottom:13px}
+.vcl{font-size:11px;color:#2e7d32;margin-bottom:7px;font-weight:500}
+.vcg{display:grid;grid-template-columns:1fr 1fr;gap:1px 12px}
+.vci{font-size:12px;color:#333;line-height:1.85}
+.vw{color:#1a5fa8;font-weight:500}
+</style>
+<div class="eg">
+<div class="hd">
+  <div class="ti">中学英文法 完全マスター</div>
+  <div class="hb">
+    <div><button class="tb a" onclick="switchGrade(1)">中 1</button><button class="tb" onclick="switchGrade(2)">中 2</button><button class="tb" onclick="switchGrade(3)">中 3</button></div>
+    <div class="sm">Shigaku Seminar</div>
+  </div>
+</div>
+<div class="mn"><div id="sb" class="sb"></div><div id="ct" class="ct"></div></div>
+</div>
+<script>
+var e=function(s){return'<span class="e">'+s+'</span>';};
+var j=function(s){return'<span class="j">'+s+'</span>';};
+var k=function(s){return'<span class="k">'+s+'</span>';};
+var br='<br>';
+var pt=function(l,c){return'<span style="background:'+c+';color:white;font-size:11px;padding:1px 7px;border-radius:3px;margin-right:5px">'+l+'</span>';};
+function G(l,s,n){return'<div class="g"><div class="gl">'+l+'</div><div class="gs">'+s+'</div>'+(n?'<div class="gn">'+n+'</div>':'')+'</div>';}
+function PT(t){return'<div class="pt"><span class="pb">ポイント</span><span class="px">'+t+'</span></div>';}
+function IF(t){return'<div class="ifo">'+t+'</div>';}
+function CH(t){return'<div class="ch"><span class="xb" style="background:#f9a825">注意</span>'+t+'</div>';}
+function HS(t){return'<div class="hs"><span class="xb" style="background:#5aaa5a">補足</span>'+t+'</div>';}
+function IP(t){return'<div class="ip"><span class="xb" style="background:#e74c3c">重要</span><br>'+t+'</div>';}
+function DV(){return'<div class="dv"></div>';}
+function NT(t){return'<div class="nt">💡 次の単元：<span class="nx">'+t+'</span></div>';}
+function Q(l,qs){return'<div class="ql">'+l+'</div>'+qs.map(function(qa,i){return'<div class="qi"><div class="qr"><div class="qn">'+(i+1)+'</div><div class="qt">'+qa[0]+'</div><button class="ab" onclick="ta(this)">解答を見る</button></div><div class="aa">答え：'+qa[1]+'</div></div>';}).join('');}
+function Q2(l,qs){return'<div class="ql">'+l+'</div><div class="q2">'+qs.map(function(qa){return'<div class="qi"><div class="qr"><div class="qn">'+qa[2]+'</div><div class="qt">'+qa[0]+'</div><button class="ab" onclick="ta(this)">解答</button></div><div class="aa">'+qa[1]+'</div></div>';}).join('')+'</div>';}
+var PTBL='<table class="t1"><tr><th>名詞の種類</th><th>複数形のつくり方</th><th>例</th></tr><tr><td>一般的な名詞</td><td class="rd">語尾に s</td><td>pen→<b style="color:#1a5fa8">pens</b></td></tr><tr><td>語尾が s,sh,ch,o,x</td><td class="rd">語尾に es</td><td>box→<b style="color:#1a5fa8">boxes</b></td></tr><tr><td>語尾が子音字＋y</td><td class="rd">y を i にかえて es</td><td>city→<b style="color:#1a5fa8">cities</b></td></tr><tr><td>語尾が f,fe</td><td class="rd">f,fe を v にかえて es</td><td>life→<b style="color:#1a5fa8">lives</b></td></tr><tr><td>不規則に変化する</td><td class="rd">それぞれ</td><td>man→<b style="color:#1a5fa8">men</b></td></tr><tr><td>変化しない</td><td class="rd">同じ</td><td>fish→<b style="color:#1a5fa8">fish</b></td></tr></table>';
+var PRTBL='<table class="t2"><tr><th rowspan="2" style="width:44px"></th><th colspan="4">単　数</th><th colspan="4">複　数</th></tr><tr><th>主格</th><th>所有格</th><th>目的格</th><th>所有代</th><th>主格</th><th>所有格</th><th>目的格</th><th>所有代</th></tr><tr><td class="lb2">1人称</td><td class="en">I</td><td class="en">my</td><td class="en">me</td><td class="en">mine</td><td class="en">we</td><td class="en">our</td><td class="en">us</td><td class="en">ours</td></tr><tr><td class="lb2">2人称</td><td class="en">you</td><td class="en">your</td><td class="en">you</td><td class="en">yours</td><td class="en">you</td><td class="en">your</td><td class="en">you</td><td class="en">yours</td></tr><tr><td class="lb2" rowspan="3">3人称</td><td class="en">he</td><td class="en">his</td><td class="en">him</td><td class="en">his</td><td class="en" rowspan="3">they</td><td class="en" rowspan="3">their</td><td class="en" rowspan="3">them</td><td class="en" rowspan="3">theirs</td></tr><tr><td class="en">she</td><td class="en">her</td><td class="en">her</td><td class="en">hers</td></tr><tr><td class="en">it</td><td class="en">its</td><td class="en">it</td><td style="color:#aaa">—</td></tr></table>';
+var VOCA='<div class="vc"><div class="vcl">✓ いろいろな一般動詞</div><div class="vcg"><div class="vci"><span class="vw">like</span>「好きである」</div><div class="vci"><span class="vw">study</span>「勉強する」</div><div class="vci"><span class="vw">play</span>「（スポーツを）する」</div><div class="vci"><span class="vw">wash</span>「洗う」</div><div class="vci"><span class="vw">come</span>「来る」</div><div class="vci"><span class="vw">write</span>「書く」</div><div class="vci"><span class="vw">speak</span>「話す」</div><div class="vci"><span class="vw">cook</span>「料理する」</div><div class="vci"><span class="vw">eat</span>「食べる」</div><div class="vci"><span class="vw">use</span>「使う」</div><div class="vci"><span class="vw">drink</span>「飲む」</div><div class="vci"><span class="vw">listen</span>「聴く」</div><div class="vci"><span class="vw">have</span>「持っている」</div><div class="vci"><span class="vw">go</span>「行く」</div><div class="vci"><span class="vw">love</span>「大好きである」</div><div class="vci"><span class="vw">want</span>「ほしい」</div><div class="vci"><span class="vw">read</span>「読む」</div><div class="vci"><span class="vw">send</span>「送る」</div><div class="vci"><span class="vw">watch</span>「観る」</div><div class="vci"><span class="vw">live</span>「住む」</div><div class="vci"><span class="vw">clean</span>「掃除する」</div><div class="vci"><span class="vw">run</span>「走る」</div><div class="vci"><span class="vw">make</span>「作る」</div><div class="vci"><span class="vw">walk</span>「歩く」</div><div class="vci"><span class="vw">open</span>「開ける」</div><div class="vci"><span class="vw">swim</span>「泳ぐ」</div><div class="vci"><span class="vw">close</span>「閉じる」</div><div class="vci"><span class="vw">know</span>「知っている」</div><div class="vci"><span class="vw">sing</span>「歌う」</div><div class="vci"><span class="vw">look, see</span>「見る」</div></div></div>';
+var U1={};
+U1[1]={t:"1. I am〜・You are〜",c:function(){return G("文法 ▶ I am〜 ・ You are〜",e("I am")+" Yuki."+j("（私は由紀です。）")+br+e("You are")+" from China."+j("（あなたは中国出身ですね。）"),"☞ "+k("I am〜")+"「私は〜です。」　☞ "+k("You are〜")+"「あなたは〜です（ね）。」")+Q("【問 1〜4】",[["私は健二です。","I am Kenji."],["私は日本出身です。","I am from Japan."],["私は中学生です。","I am a junior high school student."],["あなたはオーストラリア出身ですか。― はい、そうです。","Are you from Australia? — Yes, I am."],["あなたは学生ですか。― いいえ、ちがいます。","Are you a student? — No, I'm not."],["私はアメリカ出身ではありません。","I am not from America."],["あなたは医者ではありません。","You are not a doctor."],["私はテニスファンではありません。","I am not a tennis fan."]])+NT("2. 一般動詞①（一・二人称）");}};
+U1[2]={t:"2. 一般動詞①（一・二人称）",c:function(){return G("文法 ▶ 一般動詞（肯定文・疑問文・否定文）","I "+e("have")+" a dog."+j("（私は犬を飼っています。）")+br+e("Do you")+" speak English? — Yes, "+e("I do.")+" / No, "+e("I don't.")+br+e("I don't")+" use a computer.","☞ haveやplayなどを"+k("一般動詞")+"といいます。　☞ "+k("Do you〜?")+"「あなたは〜しますか。」")+VOCA+Q("【問 1〜3】",[["私はお寿司を食べます。","I eat sushi."],["あなたは毎日部屋を掃除します。","You clean your room every day."],["私は英語と数学を勉強します。","I study English and math."],["あなたはテレビを観ますか。― はい、観ます。","Do you watch TV? — Yes, I do."],["あなたは音楽を聴きますか。― いいえ、聴きません。","Do you listen to music? — No, I don't."],["私はピアノを弾きません。","I don't play the piano."],["あなたは英語を話しません。","You don't speak English."],["私は手紙を書きません。","I don't write letters."]])+NT("3. 助動詞 can①");}};
+U1[3]={t:"3. 助動詞 can①（一・二人称）",c:function(){return G("文法 ▶ can（肯定文・疑問文・否定文）","I "+e("can play")+" tennis."+j("（私はテニスをすることができます。）")+br+e("Can you")+" swim? — Yes, "+e("I can.")+" / No, "+e("I can't.")+br+"I "+e("can't speak")+" English.","☞ 「"+k("can＋動詞")+"」で「"+k("〜することができる")+"」という意味を表します。")+Q("【問 1〜3】",[["私はひらがな（hiragana）を読むことができます。","I can read hiragana."],["あなたは上手にピアノを弾くことができます。","You can play the piano well."],["あなたは漢字（kanji）を読むことができますか。― はい、できます。","Can you read kanji? — Yes, I can."],["あなたはギターを弾くことができますか。― いいえ、できません。","Can you play the guitar? — No, I can't."],["私は速く（fast）泳ぐことができません。","I can't swim fast."],["あなたはそこに行くことができません。","You can't go there."]])+NT("4. 命令文");}};
+U1[4]={t:"4. 命令文",c:function(){return G("文法 ▶ 命令文・Please〜・Let's〜・Don't〜",e("Open")+" the window."+j("（窓を開けなさい。）")+br+e("Please come")+" to my house. — Sure."+br+e("Let's have")+" lunch. — Yes, let's."+br+e("Don't speak")+" Japanese here. — All right.","☞ 命令文は"+k("動詞の原形で始まり")+"、主語は省略。")+Q("【問 1〜2】",[["夕食を作りなさい。","Make dinner."],["毎日英語を勉強しなさい。","Study English every day."],["公園に行きなさい。","Go to the park."],["ケーキ（a cake）を作ってください。― いいですよ。","Please make a cake. — Sure."],["ここでテニスをしましょう。― そうしましょう。","Let's play tennis here. — Yes, let's."],["テレビを観てはいけません。― わかりました。","Don't watch TV. — All right."]])+NT("5. 複数形・How many〜？");}};
+U1[5]={t:"5. 複数形・How many〜？",c:function(){return G("文法 ▶ 複数形・How many〜？","I have two "+e("dogs")+".  "+e("How many books")+" do you have? — I have four.","☞ ２つ（２人）以上の名詞の形を"+k("複数形")+"といいます。　☞ "+k("How many＋複数名詞＋疑問文？")+"の形を使います。")+PTBL+Q2("【問 1】次の語の複数形を書きなさい。",[["book（本）","books","1"],["class（クラス）","classes","2"],["chair（イス）","chairs","3"],["child（子ども）","children","4"],["dress（ドレス）","dresses","5"],["hobby（趣味）","hobbies","6"],["brother（兄・弟）","brothers","7"],["question（質問）","questions","8"],["knife（ナイフ）","knives","9"],["dish（皿）","dishes","10"],["student（生徒）","students","11"],["woman（女性）","women","12"],["bus（バス）","buses","13"],["story（物語）","stories","14"],["leaf（葉）","leaves","15"],["ball（ボール）","balls","16"],["computer（コンピューター）","computers","17"],["tooth（歯）","teeth","18"],["watch（うで時計）","watches","19"],["desk（机）","desks","20"]])+Q("【問 2】",[["あなたは何本の鉛筆を持っていますか。― ５本持っています。","How many pencils do you have? — I have five."],["あなたは何冊の本を読みますか。― ３冊読みます。","How many books do you read? — I read three."],["あなたは何個のバッグがほしいですか。― ２個ほしいです。","How many bags do you want? — I want two."],["あなたは毎週何冊の本を読みますか。― ２冊読みます。","How many books do you read every week? — I read two."],["あなたのクラスには何人の生徒がいますか。― 30人います。","How many students are there in your class? — There are thirty."]])+NT("6. This is〜・That is〜");}};
+U1[6]={t:"6. This is〜・That is〜",c:function(){return G("文法 ▶ This is〜 ・ That is〜",e("This is")+" a book."+j("（これは本です。）")+br+e("Is this")+" a pen? — Yes, "+e("it is.")+" / No, "+e("it isn't.")+br+e("This is not")+" a CD.","☞ "+k("This is〜")+"「これ（こちら）は〜です。」　☞ "+k("That is〜")+"「あれ（あちら）は〜です。」")+Q("【問 1〜3】",[["これは私のカメラです。","This is my camera."],["あれは鉛筆です。","That is a pencil."],["これは私のカバンですか。― はい、そうです。","Is this your bag? — Yes, it is."],["あれはあなたの自転車ですか。― いいえ、ちがいます。","Is that your bicycle? — No, it isn't."],["これは私のコンピューターではありません。","This is not my computer."],["あれはあなたの机ではありません。","That is not your desk."]])+NT("7. What do you〜？");}};
+U1[7]={t:"7. What do you〜？",c:function(){return G("文法 ▶ What do you〜？",e("What")+" do you have? — I have a book.","☞ "+k("What do you〜?")+"「あなたは何を〜しますか。」")+Q("【問】",[["あなたは何を持っていますか。― 私はカメラを持っています。","What do you have? — I have a camera."],["あなたは何を勉強しますか。― 私は英語を勉強します。","What do you study? — I study English."],["あなたは何が好きですか。― 私はテニスが好きです。","What do you like? — I like tennis."],["あなたは何を食べますか。― 私は寿司を食べます。","What do you eat? — I eat sushi."],["あなたは何がほしいですか。― 私は自転車がほしいです。","What do you want? — I want a bicycle."]])+NT("8. What is this？");}};
+U1[8]={t:"8. What is this？",c:function(){return G("文法 ▶ What is this？",e("What is")+" this? — "+e("It is")+" a desk."+j("（それは机です。）")+br+e("What is")+" that? — "+e("It's")+" a dog.","☞ "+k("What is this(that)?")+"「これは（あれは）何ですか。」　☞ "+k("it（それは）")+"で答えます。")+Q("【問】",[["これは何ですか。― それは鉛筆です。","What is this? — It is a pencil."],["あれは何ですか。― それはピアノです。","What is that? — It is a piano."],["これは何ですか。― カメラです。","What is this? — It is a camera."],["あれは何ですか。― テーブルです。","What is that? — It is a table."]])+NT("9. 疑問詞＋is・疑問詞＋do");}};
+U1[9]={t:"9. 疑問詞＋is・疑問詞＋do",c:function(){return G("文法 ▶ 疑問詞を使った疑問文",e("What is")+" this? / "+e("Who is")+" that? / "+e("Where")+" is your school? / "+e("When")+" is your birthday?","☞ 疑問詞を使った疑問文は"+k("疑問詞＋疑問文？")+"の形になります。Yes・Noではなく"+k("主語＋動詞")+"の形で答えます。")+Q("【問 1〜3】",[["これは何ですか。― それは鉛筆です。","What is this? — It is a pencil."],["あちらはだれですか。― あちらは私の弟です。","Who is that? — That is my brother."],["あなたはどこでサッカーをしますか。― 私は公園でします。","Where do you play soccer? — I play it in the park."],["コンサートはいつですか。― ７月５日です。","When is the concert? — It is on July 5."],["あなたはどのようにして公園に行きますか。― 私は自転車で行きます。","How do you go to the park? — I go by bicycle."]])+NT("10. What＋名詞");}};
+U1[10]={t:"10. What＋名詞",c:function(){return G("文法 ▶ What time is it？・What＋名詞",e("What time")+" is it? — It is nine."+br+e("What time")+" do you go to school? — At eight."+br+e("What sports")+" can we play here?","☞ "+k("What time is it?")+"「何時ですか。」　☞ "+k("What＋名詞＋疑問文?")+"「どんな〜を…」")+Q("【問 1〜3】",[["今、何時ですか。― 11時です。","What time is it? — It is eleven (o'clock)."],["東京は何時ですか。― 正午です。","What time is it in Tokyo? — It is noon."],["あなたは何時に昼食を食べますか。","What time do you eat lunch?"],["私は12時に昼食を食べます。","I eat lunch at twelve (noon)."],["あなたは何色が好きですか。― 私は青色（blue）が好きです。","What color do you like? — I like blue."],["私たちは動物園でどんな動物を見ることができますか。","What animals can we see in the zoo?"]])+NT("11. He is〜・She is〜");}};
+U1[11]={t:"11. He is〜・She is〜",c:function(){return G("文法 ▶ He is〜 ・ She is〜（肯定文・疑問文・否定文）","This is Kenji. "+e("He is")+" my brother."+j("（彼は私の弟です。）")+br+"That is Ms. Green. "+e("She is")+" an English teacher."+j("（彼女は英語の先生です。）")+br+e("Is he")+" a math teacher? — Yes, "+e("he is.")+" / No, "+e("he isn't.")+br+e("He isn't")+" from Hokkaido.","☞ "+k("He is〜")+"「彼は〜です。」　☞ "+k("She is〜")+"「彼女は〜です。」")+Q("【問 1〜3】",[["こちらはリサ（Lisa）です。彼女は学生です。","This is Lisa. She is a student."],["あちらはブラウンさん（Mr. Brown）です。彼は医者です。","That is Mr. Brown. He is a doctor."],["彼はあなたの父親ですか。― はい、そうです。","Is he your father? — Yes, he is."],["彼女は音楽の先生ですか。― いいえ、ちがいます。","Is she a music teacher? — No, she isn't."],["彼はサッカーファンではありません。","He isn't a soccer fan."],["彼女は私の妹ではありません。","She isn't my sister."]])+NT("12. 一般動詞②（三人称単数）");}};
+U1[12]={t:"12. 一般動詞②（三人称単数）",c:function(){return G("文法 ▶ 三人称単数（肯定文・疑問文・否定文）",pt("一・二人称","#1a5fa8")+"I "+e("like")+" oranges."+j("（私はオレンジが好きです。）")+br+pt("三人称単数","#d97706")+"He "+e("likes")+" apples."+j("（彼はリンゴが好きです。）")+br+e("Does he")+" watch TV? — Yes, "+e("he does.")+" / No, "+e("he doesn't.")+br+"My sister "+e("doesn't play")+" the piano.","☞ 主語が三人称単数のとき一般動詞に"+k("s(es)")+"をつけます。　☞ 疑問文は"+k("Does")+"で始め一般動詞は"+k("原形")+"になります。")+Q("【問 1〜3】",[["私の父は車を洗います。","My father washes his car."],["彼女は毎日英語を勉強します。","She studies English every day."],["その列車は博多に行きます。","The train goes to Hakata."],["彼は犬を飼っています。","He has a dog."],["彼は毎日学校に行きますか。― はい、行きます。","Does he go to school every day? — Yes, he does."],["彼女は私の名前を知っていますか。― いいえ、知りません。","Does she know my name? — No, she doesn't."],["香奈は日本に住んでいません。","Kana doesn't live in Japan."],["私の母は英語を話しません。","My mother doesn't speak English."]])+NT("13. 人称代名詞");}};
+U1[13]={t:"13. 人称代名詞",c:function(){return G("文法 ▶ 人称代名詞","This is Kumi. "+e("She")+" is from Japan.","☞ 人や物の名前の代わりに使う名詞を"+k("代名詞")+"といいます。")+PRTBL+Q("【問】下線部の語（句）を代名詞１語で書きかえなさい。",[["<u>The boy</u> is Kenji.","He（The boy → He）"],["This is <u>Keiko's</u> camera.","her（Keiko's → her）"],["<u>Mike and I</u> are good friends.","We（Mike and I → We）"],["I use <u>these pens</u>.","them（these pens → them）"],["I know <u>Lisa's</u> brother.","her（Lisa's → her）"],["<u>That girl</u> is my sister.","She（That girl → She）"],["Do you know <u>Mr. Smith</u>?","him（Mr. Smith → him）"],["<u>Bob and Lisa</u> are my friends.","They（Bob and Lisa → They）"],["This racket is <u>Kenji's</u>.","his（Kenji's → his）"],["This is a letter for <u>my mother</u>.","her（my mother → her）"]])+NT("14. 助動詞 can");}};
+U1[14]={t:"14. 助動詞 can",c:function(){return G("文法 ▶ can（全主語）・疑問文・否定文・会話表現","I "+e("can speak")+" English."+j("（私は英語を話すことができます。）")+br+"She "+e("can play")+" the piano."+j("（彼女はピアノを弾くことができます。）")+br+e("Can you")+" use a computer? — Yes, I "+e("can.")+" / No, I "+e("can't.")+br+e("Can I")+" use this desk? — Sure. / Sorry, you can't."+br+e("Can you")+" help me? — Sure. / Sorry, I can't.","☞ "+k("can＋動詞の原形")+"「〜することができる」　☞ "+k("Can I〜?")+"「〜してもいいですか。」　☞ "+k("Can you〜?")+"「〜してくれませんか。」")+Q("【問 1〜4】",[["あなたたちはこの本を読むことができます。","You can read this book."],["あなたは上手に泳ぐことができますか。― はい、できます。","Can you swim well? — Yes, I can."],["彼女はこの歌を歌うことができますか。― いいえ、できません。","Can she sing this song? — No, she can't."],["彼らはお寿司を食べることができません。","They can't eat sushi."],["テレビを観てもいいですか。― いいですよ。","Can I watch TV? — Sure. (OK.)"],["窓を開けてくれませんか。― すみません、開けることができません。","Can you open the window? — (I'm) sorry, I can't."]])+NT("15. 現在進行形");}};
+U1[15]={t:"15. 現在進行形",c:function(){return G("文法 ▶ 現在進行形（肯定文・疑問文・否定文）","I "+e("am playing")+" soccer now."+j("（私は今サッカーをしています。）")+br+"She "+e("is writing")+" a letter."+j("（彼女は手紙を書いています。）")+br+e("Is he using")+" a computer? — Yes, "+e("he is.")+" / No, "+e("he isn't.")+br+e("What are you doing")+" now? — I am taking pictures.","☞ "+k("be動詞＋〜ing")+"の形で「"+k("〜している（ところだ）")+"」という意味を表します。")+Q("【問 1〜4】",[["私は今英語を勉強しているところです。","I am studying English now."],["彼女は本を読んでいるところです。","She is reading a book."],["私たちは川で泳いでいるところです。","We are swimming in the river."],["あなたは今自分の部屋を掃除しているところですか。― はい、掃除しています。","Are you cleaning your room now? — Yes, I am."],["彼女は音楽を聴いているところですか。― いいえ、聴いていません。","Is she listening to music? — No, she isn't."],["彼女はピアノを弾いているところではありません。","She isn't playing the piano."],["彼らは今昼食を食べているところではありません。","They aren't eating lunch now."],["あなたは何を作っていますか。― 私はイスを作っています。","What are you making? — I am making a chair."],["彼女は今何を食べていますか。― 彼女はお寿司を食べています。","What is she eating now? — She is eating sushi."]])+NT("16. 感嘆文");}};
+U1[16]={t:"16. 感嘆文",c:function(){return G("文法 ▶ 感嘆文（How〜 ・ What〜）","① "+e("How beautiful")+" this flower is!"+j("（この花はなんて美しいのでしょう！）")+br+"② "+e("What a beautiful flower")+" this is!"+j("（これはなんて美しい花なのでしょう！）"),"☞ 「なんて〜だろう！」という強い感情を表す文を"+k("感嘆文")+"といいます。")+Q("【問 1〜2】",[["あのカバンはなんてすてき（nice）なのでしょう！","How nice that bag is!"],["あれはなんてすてきなカバンでしょう！","What a nice bag that is!"],["この本はなんておもしろいのでしょう！","How interesting this book is!"],["これはなんておもしろい本でしょう！","What an interesting book this is!"],["彼はなんて速く走るのでしょう！","How fast he runs!"],["あなたはなんて美しい目（eyes）をしているのでしょう！","What beautiful eyes you have!"],["なんてかわいいのでしょう！","How cute!"],["なんて大きな犬なのでしょう！","What a big dog!"],])+NT("17. 一般動詞の過去形");}};
+U1[17]={t:"17. 一般動詞の過去形",c:function(){return G("文法 ▶ 過去形（規則変化・不規則変化・疑問文・否定文）",pt("現在形","#1a5fa8")+"He "+e("plays")+" soccer every day."+br+pt("過去形","#d97706")+"He "+e("played")+" baseball yesterday."+j("（彼は昨日野球をしました。）")+br+"She "+e("went")+" to the library yesterday."+j("（彼女は昨日図書館に行きました。）")+br+e("Did he watch")+" TV yesterday? — Yes, "+e("he did.")+" / No, "+e("he didn't."),"☞ 過去の文を表すには一般動詞に"+k("d(ed)")+"をつけます。　☞ 疑問文は"+k("Did")+"で始め一般動詞は"+k("原形")+"になります。")+Q("【問 1〜5】",[["私の父は先週自分の車を洗いました。","My father washed his car last week."],["彼女は昨晩英語を勉強しました。","She studied English last night."],["私は昨日手紙を書きました。","I wrote a letter yesterday."],["彼は先週川で泳ぎました。","He swam in the river last week."],["あなたは今朝早く起きましたか。― はい、起きました。","Did you get up early this morning? — Yes, I did."],["彼女はあなたの名前を知っていましたか。― いいえ、知りませんでした。","Did she know your name? — No, she didn't."],["彼らは先月京都を訪れませんでした。","They didn't visit Kyoto last month."],["私は昨日このコンピューターを使いませんでした。","I didn't use this computer yesterday."],["あなたは昨日どこに行きましたか。","Where did you go yesterday?"],["彼らは何時に駅に着きましたか。","What time did they arrive at the station?"]])+NT("18. 疑問詞");}};
+U1[18]={t:"18. 疑問詞",c:function(){return G("文法 ▶ 疑問詞を使った疑問文",e("What")+" do you usually do on Sundays?"+br+e("Where")+" did you go yesterday?"+br+e("Who")+" cooks dinner every day? — My mother "+e("does.")+br+e("How many books")+" do you have? / "+e("How old")+" is your father?","☞ 疑問詞を使った疑問文は"+k('"疑問詞＋疑問文？"')+"の形になります。　☞ Yes・Noではなく"+k("主語＋動詞")+"の形で答えます。")+Q("【問 1〜3】",[["あなたのおじは何を飲みましたか。― 彼はお茶を飲みました。","What did your uncle drink? — He drank tea."],["あなたは毎日どこで勉強しますか。― 私は自分の部屋で勉強します。","Where do you study every day? — I study in my room."],["あなたはふつうどのようにして学校に行きますか。― 私はバスで行きます。","How do you usually go to school? — I go by bus."],["だれがギターを弾くことができますか。― 私の兄ができます。","Who can play the guitar? — My brother can."],["だれがそのコンピューターを使いましたか。― タケシが使いました。","Who used that computer? — Takeshi did."],["あなたはいくつのケーキを食べましたか。― 私は３つ食べました。","How many cakes did you eat? — I ate three."],["このカバンはいくらですか。― ２千円です。","How much is this bag? — It is two thousand yen."]])+'<div class="nt" style="background:#e8f1fb;border-color:#1a5fa8;color:#1a5fa8">🎉 <span class="nx">中 1 全 18 単元　完了！</span></div>';}};
+var U2={};
+U2[1]={t:"1. be動詞の過去形",c:function(){return G("文法 ▶ was・were（肯定文・疑問文・否定文）",pt("現在形","#1a5fa8")+"I "+e("am")+" in Kyoto now."+br+pt("過去形","#d97706")+"I "+e("was")+" in Tokyo yesterday."+j("（私は昨日東京にいました。）")+br+pt("過去形","#d97706")+"We "+e("were")+" tired then."+br+e("Was it")+" cold yesterday? — Yes, it "+e("was.")+" / No, it "+e("wasn't.")+br+"My mother "+e("wasn't")+" (at) home yesterday.","☞ be動詞の過去形 "+k("was・were")+" は「"+k("〜でした、いました")+"」という意味を表します。")+Q("【問 1〜3】",[["昨日は雨でした。","It was rainy yesterday."],["私たちは昨年は高校生でした。","We were high school students last year."],["私の弟と私は昨日の午後は忙しかった。","My brother and I were busy yesterday afternoon."],["彼女はクラスで人気がありましたか。― はい、人気がありました。","Was she popular in her class? — Yes, she was."],["あなたは昨年中国にいましたか。― いいえ、いませんでした。","Were you in China last year? — No, I wasn't."],["先週は暖かくありませんでした。","It wasn't warm last week."],["私たちはそのとき（then）幸せではありませんでした。","We weren't happy then."],["彼らは３日前は日本にいませんでした。","They weren't in Japan three days ago."]])+NT("2. 過去進行形");}};
+U2[2]={t:"2. 過去進行形",c:function(){return G("文法 ▶ 過去進行形（肯定文・疑問文・否定文・疑問詞）",pt("現在進行形","#1a5fa8")+"I "+e("am playing")+" soccer now."+br+pt("過去進行形","#d97706")+"I "+e("was playing")+" soccer then."+j("（私はそのときサッカーをしていました。）")+br+e("Was your brother using")+" that computer? — Yes, he "+e("was.")+" / No, he "+e("wasn't.")+br+e("What were you doing")+" at that time? — I was taking pictures.","☞ "+k("was(were)＋〜ing")+"の形で「"+k("〜していました")+"」という意味を表します。")+Q("【問 1〜4】",[["私はそのとき英語を勉強していました。","I was studying English then."],["彼女はそのとき本を読んでいました。","She was reading a book then."],["私たちはそのとき川で泳いでいました。","We were swimming in the river then."],["あなたはそのとき自分の部屋を掃除していましたか。― はい、掃除していました。","Were you cleaning your room then? — Yes, I was."],["彼女はそのとき音楽を聴いていましたか。― いいえ、聴いていませんでした。","Was she listening to music then? — No, she wasn't."],["恵子はそのときピアノを弾いていませんでした。","Keiko wasn't playing the piano then."],["私たちはそのときテレビを観ていませんでした。","We weren't watching TV then."],["彼らはそのとき昼食を食べていませんでした。","They weren't eating lunch then."],["あなたはそのときどこで泳いでいましたか。","Where were you swimming then?"],["彼女はそのとき何を食べていましたか。","What was she eating then?"]])+NT("3. 未来形（be going to〜）");}};
+U2[3]={t:"3. 未来形（be going to〜）",c:function(){return G("文法 ▶ be going to〜（肯定文・疑問文・否定文）","I "+e("am going to play")+" tennis this afternoon."+j("（私は今日の午後テニスをするつもり[予定]です。）")+br+e("Are you going to")+" go to Kyoto? — Yes, I "+e("am.")+" / No, I'm "+e("not.")+br+"She "+e("isn't going to watch")+" TV today.","☞ "+k("be going to＋動詞の原形")+"で「"+k("〜するつもりだ")+"」「"+k("〜する予定だ")+"」という意味を表します。")+Q("【問 1〜4】",[["私は彼女のためにその本を買うつもりです。","I am going to buy the book for her."],["彼らは来年英語を学ぶ予定です。","They are going to study English next year."],["あなたは来週ここに来るつもりですか。― はい、そのつもりです。","Are you going to come here next week? — Yes, I am."],["彼は明日図書館に行く予定ですか。― いいえ、その予定ではありません。","Is he going to go to the library tomorrow? — No, he isn't."],["彼らは今日の午後野球をするつもりはありません。","They aren't going to play baseball this afternoon."],["久美は明日母を手伝うつもりはありません。","Kumi isn't going to help her mother tomorrow."],["あなたは今日の午後どこに行く予定ですか。","Where are you going to go this afternoon?"],["彼はその店（the shop）で何を買うつもりですか。","What is he going to buy at the shop?"]])+NT("4. must・have to〜");}};
+U2[4]={t:"4. must〜・have to〜",c:function(){return G("文法 ▶ must〜・have to〜（肯定文・否定文・疑問文）","I "+e("must do")+" my homework this afternoon."+j("（私は今日の午後宿題をしなければなりません。）")+br+"I "+e("have to do")+" my homework this afternoon."+j("（私は今日の午後宿題をしなければなりません。）")+br+"We "+e("must not play")+" baseball here."+j("（してはいけない）")+"　We "+e("don't have to help")+" him today."+j("（〜する必要はない）"),"☞ "+k("must＋動詞の原形")+"「〜しなければならない」　☞ "+k("must not")+"「〜してはいけない」　☞ "+k("don't have to")+"「〜する必要はない」")+Q("【問 1〜3】",[["私は母を手伝わなければなりません。（mustを使って）","I must help my mother."],["私は母を手伝わなければなりません。（have toを使って）","I have to help my mother."],["彼女は午後図書館に行かなければなりません。（mustを使って）","She must go to the library in the afternoon."],["彼女は午後図書館に行かなければなりません。（has toを使って）","She has to go to the library in the afternoon."],["あなたは今日自分の部屋を掃除する必要はありません。","You don't have to clean your room today."],["あなたはここで日本語を話してはいけません。","You must not speak Japanese here."],["私たちは今日の午後学校に行く必要はありません。","We don't have to go to school this afternoon."],["彼らは今テレビを観てはいけません。","They must not watch TV now."],["私はここに滞在しなければなりませんか。（mustを使って）","Must I stay here?"],["はい、そうしなければなりません。","Yes, you must."],["彼らは今日英語を勉強しなければなりませんか。（mustを使って）","Must they study English today?"],["いいえ、その必要はありません。","No, they don't have to."]])+NT("5. 接続詞");}};
+U2[5]={t:"5. 接続詞",c:function(){return G("文法 ▶ 接続詞 that・when〜・if〜・because〜","I "+e("think (that)")+" this book is interesting."+j("（私はこの本はおもしろいと思います。）")+br+"I "+e("don't think (that)")+" she can play the piano."+j("（私は、彼女はピアノを弾くことができないと思います。）")+br+"My brother was watching TV "+e("when I came home")+"."+j("（私が家に帰ってきたとき、私の弟はテレビを観ていました。）")+br+"Let's go to the library "+e("if you are free")+"."+j("（もしあなたが暇なら、図書館に行きましょう。）")+br+"I went to bed early "+e("because I was very tired")+"."+j("（私はとても疲れていたので、早く寝ました。）"),"☞ "+k("that")+"「〜ということ、〜だと」　☞ "+k("when〜")+"「〜するとき」　☞ "+k("if〜")+"「もし〜ならば」　☞ "+k("because〜")+"「〜だから、〜なので」")+Q("【問 1〜5】",[["私たちは彼女がよい先生だと思います。","We think (that) she is a good teacher."],["私は彼が医者であることを知っています。","I know (that) he is a doctor."],["明日は晴れないと私は思います。","I don't think (that) it will be sunny tomorrow."],["私が子どものとき、私は京都に住んでいました。","When I was a child, I lived in Kyoto."],["彼が久美に会ったとき、彼女はバスを待っていました。","When he met Kumi, she was waiting for a bus."],["もし明日晴れれば、彼は公園へ行くでしょう。","If it is sunny tomorrow, he will go to the park."],["もしあなたが忙しいならば、私はあなたを手伝います。","If you are busy, I will help you."],["私は日本の文化が好きなので、日本に行きたいです。","I want to go to Japan because I like Japanese culture."],["雨だったので、彼は家にいました。","He stayed home because it was rainy."],["私の母が忙しかったので、私は彼女を手伝いました。","I helped my mother because she was busy."]])+NT("6. 助動詞の会話表現");}};
+U2[6]={t:"6. 助動詞の会話表現",c:function(){return G("文法 ▶ Can I〜？・Can(Will) you〜？・Shall I〜？",e("Can I")+" use your pen?"+j("（あなたのペンを使ってもいいですか。）")+br+e("Can you")+" open the window?"+j("（窓を開けてくれますか。）")+br+e("Shall I")+" bring your bag?"+j("（あなたのカバンをお持ちしましょうか。）"),"☞ 「"+k("Can I〜?")+"」は「"+k("〜してもよいですか。")+"」　☞ 「"+k("Can(Will) you〜?")+"」は「"+k("〜してくれますか。")+"」　☞ 「"+k("Shall I〜?")+"」は「"+k("〜しましょうか。")+"」")+Q("【問 1〜5】",[["入ってもいいですか。","Can I come in?"],["ピアノを弾いてくれますか。","Can(Will) you play the piano?"],["あなたのカメラを借りていいですか。","Can I borrow your camera?"],["ドアを閉めてくれますか。","Can(Will) you close the door?"],["彼らはお寿司を食べることができません。","They can't eat sushi."],["彼は英語で手紙を書くことができません。","He can't write a letter in English."],["テレビを観てもいいですか。― いいですよ。","Can I watch TV? — Sure. (OK.)"],["窓を開けてくれませんか。― すみません、開けることができません。","Can you open the window? — (I'm) sorry, I can't."],["窓を開けましょうか。","Shall I open the window?"],["そこまであなたを連れていきましょうか。","Shall I take you there?"],["あなたの部屋を掃除しましょうか。","Shall I clean your room?"]])+NT("7. There is〜");}};
+U2[7]={t:"7. There is〜",c:function(){return G("文法 ▶ There is(are)〜（肯定文・疑問文・否定文・Here is）",e("There is")+" a book on the desk."+j("（机の上に本があります。）")+br+e("There are")+" two bikes in the park."+j("（公園に2台の自転車があります。）")+br+e("Is there")+" a restaurant near here? — Yes, "+e("there is.")+" / No, "+e("there isn't.")+br+e("There isn't")+" a library near my house."+br+e("Here is")+" your bag."+j("（ここにあなたのカバンがあります。）"),"☞ "+k("There is(are)〜.")+"で「"+k("〜がある（いる）")+"」という意味を表します。　☞ "+k("Here is(are)〜.")+"「ここに〜がある」")+IP("（〜ある）ものが「数えられない名詞」の場合は、単数としてあつかうので「There is〜.」を使います。")+Q("【問 1〜5】",[["教室に1人の生徒がいます。","There is a student in the classroom."],["壁に3枚の絵があります。","There are three pictures on the wall."],["川にはたくさんの水があります。","There is a lot of water in the river."],["この部屋の中にイスはありません。","There isn't a chair in this room."],["カバンの中に本は1冊もありません。","There are no books in the bag."],["あなたの部屋にピアノはありますか。― はい、あります。","Is there a piano in your room? — Yes, there is."],["テーブルの上にいくつかのジャガイモはありますか。― いいえ、ありません。","Are there any potatoes on the table? — No, there aren't."],["公園に何匹の犬がいますか。― 4匹います。","How many dogs are there in the park? — There are four."],["教室に何人の生徒がいますか。― 10人います。","How many students are there in the classroom? — There are ten."],["ここに問題があります。（さあ、問題です。）","Here is a question."],["ここに手紙があります。","Here is a letter."]])+NT("8. 不定詞・動名詞");}};
+U2[8]={t:"8. 不定詞・動名詞",c:function(){return G("文法 ▶ 不定詞の3用法・動名詞",pt("名詞的用法","#1a5fa8")+"I like "+e("to play")+" tennis."+j("（私はテニスをすることが好きです。）")+br+pt("副詞的用法","#d97706")+"I went to the park "+e("to play")+" soccer."+j("（私はサッカーをするために公園に行きました。）")+br+pt("形容詞的用法","#27ae60")+"He wants something "+e("to eat")+"."+j("（彼は何か食べ物がほしい。）")+br+pt("動名詞","#8e44ad")+"I "+e("enjoy playing")+" tennis."+j("（私はテニスをすることを楽しみます。）"),"☞ 不定詞：①名詞的用法「〜すること」　②副詞的用法「〜するために・〜して」　③形容詞的用法「〜するための・〜すべき」　☞ 動名詞(〜ing形)「〜すること」")+Q("【問 1〜4】",[["彼はテレビで野球の試合を観ることが好きです。","He likes to watch a baseball game on TV."],["彼女は英語を勉強し始めました。","She began(started) to study English."],["私の妹は窓を開けようとしました。","My sister tried to open the window."],["この本を読むことは簡単です。","To read this book is easy. (It is easy to read this book.)"],["私は英語を勉強するためにアメリカに行きました。","I went to America to study English."],["私のおじは昨晩私に会いに来ました。","My uncle came to see me last night."],["彼らはあなたに会えてうれしかった。","They were glad to meet(see) you."],["彼女は何か冷たい飲み物がほしかった。","She wanted something cold to drink."],["私は音楽を聴くことを楽しみます。（動名詞を使って）","I enjoy listening to music."],["彼女は宿題をし終えました。","She finished doing her homework."],["彼は歌うことをやめました。","He stopped singing."]])+NT("9. look〜・become〜");}};
+U2[9]={t:"9. look〜・become〜",c:function(){return G("文法 ▶ look〜 ・ become〜（補語をとる動詞）","The man "+e("looks happy")+"."+j("（その男の人は幸せそうに見えます。）")+br+"He "+e("became a great scientist")+"."+j("（彼は偉大な科学者になりました。）"),"☞ look・become・sound・feel・getなどを使った文では、下線部の語を"+k("補語")+"といいます。この文型では"+k("主語＝補語")+"の関係になります。")+Q("【問】",[["彼女はよい先生になりました。","She became a good teacher."],["そのとき彼は悲しそうにみえました。","He looked sad then."],["すぐに暗くなるでしょう。","It will get dark soon."],["彼の計画はおもしろそうです。","His plan sounds interesting."]])+NT("10. give＋人＋物");}};
+U2[10]={t:"10. give＋人＋物",c:function(){return G("文法 ▶ give＋人＋物（２つの目的語・前置詞書きかえ）","I'll "+e("give her a present")+". = I'll give "+e("a present to her")+"."+j("（私は彼女にプレゼントをあげるつもりです。）")+br+"My father "+e("bought me a new camera")+". = My father bought "+e("a new camera for me")+".","☞ "+k("to")+"を使うもの ⇒ give・send・tell・show・teach・lend など　☞ "+k("for")+"を使うもの ⇒ buy・make・cook など")+Q("【問 1〜2】",[["彼女のおばは彼女にその本をあげました。","Her aunt gave her the book."],["私にあなたのコンピューターを貸してください。","Please lend me your computer."],["その女の子は友だちに手紙を送りました。","The girl sent her friend a letter."],["彼は私の弟に英語を教えてくれます。","He teaches my brother English. / He teaches English to my brother."],["私のおじは私にこのイスを作ってくれました。","My uncle made me this chair. / My uncle made this chair for me."],["私はあなたに私のノートを見せてあげます。","I'll show you my notebook. / I'll show my notebook to you."]])+NT("11. 比較の文");}};
+U2[11]={t:"11. 比較の文",c:function(){var c='<table class="t1" style="font-size:12px"><tr><th>原級</th><th>比較級</th><th>最上級</th><th>原級</th><th>比較級</th><th>最上級</th></tr><tr><td>tall</td><td class="rd">taller</td><td>tallest</td><td>old</td><td class="rd">older</td><td>oldest</td></tr><tr><td>small</td><td class="rd">smaller</td><td>smallest</td><td>long</td><td class="rd">longer</td><td>longest</td></tr><tr><td>big</td><td class="rd">bigger</td><td>biggest</td><td>short</td><td class="rd">shorter</td><td>shortest</td></tr><tr><td>fast</td><td class="rd">faster</td><td>fastest</td><td>heavy</td><td class="rd">heavier</td><td>heaviest</td></tr><tr><td>easy</td><td class="rd">easier</td><td>easiest</td><td>hot</td><td class="rd">hotter</td><td>hottest</td></tr></table>';
+return G("①原級「…と同じくらい〜」　②比較級「…よりも〜」　③最上級「もっとも〜」","Ken is "+e("as tall as")+" Mike."+j("（ケンはマイクと同じくらい背が高いです。）")+br+"Ken is "+e("taller than")+" Mike."+j("（ケンはマイクより背が高いです。）")+br+"This flower is "+e("more beautiful than")+" that one."+j("（この花はあの花よりも美しいです。）")+br+"Ken is "+e("the tallest")+" in his class."+j("（ケンはクラスでもっとも背が高いです。）")+br+"I like coffee "+e("better than")+" tea."+j("（私は紅茶よりもコーヒーが好きです。）"))+c+Q("【問 1〜4】",[["私たちの先生は私の父と同じ歳です。","Our teacher is as old as my father."],["この犬はあの犬ほど大きくありません。","This dog is not as big as that one."],["トムはマイクよりも若いです。","Tom is younger than Mike."],["この本はあの本よりもおもしろいです。","This book is more interesting than that one."],["この鉛筆は私のものよりずっと短いです。","This pencil is much shorter than mine."],["富士山は日本でもっとも高い山です。","Mt. Fuji is the highest mountain in Japan."],["恵子は5人のなかでいちばん年下です。","Keiko is the youngest of the five."],["野球はすべてのスポーツのなかでいちばんわくわくします。","Baseball is the most exciting of all sports."],["私は野球よりもサッカーが好きです。","I like soccer better than baseball."],["彼はすべての季節のなかで夏がいちばん好きです。","He likes summer the best of all seasons."],["あなたはこの本とあの本ではどちらの方が好きですか。","Which do you like better, this book or that one?"],["あなたはどの動物がいちばん好きですか。","Which(What) animal do you like the best?"]])+NT("12. 受け身の文");}};
+U2[12]={t:"12. 受け身の文",c:function(){return G("文法 ▶ 受け身の文（肯定文・疑問文・否定文・by以外の前置詞）",pt("能動態","#1a5fa8")+"He "+e("uses")+" this bike."+j("（彼はこの自転車を使います。）")+br+pt("受動態","#d97706")+"This bike "+e("is used")+" by him."+j("（この自転車は彼によって使われます。）")+br+e("Was the cake made")+" by her? — Yes, it "+e("was.")+" / No, it "+e("wasn't.")+br+"The book "+e("wasn't read")+" by the students."+j("（その本は生徒たちに読まれませんでした。）")+br+"I "+e("am interested in")+" Japanese history."+j("（私は日本の歴史に興味があります。）"),"☞ "+k("be動詞＋過去分詞")+"「〜される」　☞ be interested in〜 / be surprised at〜 / be covered with〜 など")+Q("【問 1〜4】",[["この本は彼によって書かれました。","This book was written by him."],["この部屋は昨日久美によって掃除されました。","This room was cleaned by Kumi yesterday."],["その車は彼によって洗われましたか。― いいえ、洗われませんでした。","Was the car washed by him? — No, it wasn't."],["田中先生（Mr. Tanaka）は生徒たちに好かれていますか。― はい、好かれています。","Is Mr. Tanaka liked by his students? — Yes, he is."],["英語はこの国では話されていません。","English isn't spoken in this country."],["その教室は生徒たちによって掃除されませんでした。","The classroom wasn't cleaned by the students."],["彼らはその知らせに驚きました。","They were surprised at the news."],["その山は雪でおおわれています。","The mountain is covered with snow."]])+'<div class="nt" style="background:#e8f1fb;border-color:#1a5fa8;color:#1a5fa8">🎉 <span class="nx">中 2 全 12 単元　完了！</span></div>';}};
+var U3={};
+U3[1]={t:"1. 現在完了形",c:function(){
+var base='<div class="ifo" style="margin-bottom:13px"><strong>現在完了形の基本形：</strong> '+e("have(has)")+" ＋ 過去分詞　　<span style='font-size:12px;color:#555'>3つの用法：①継続　②経験　③完了・結果</span></div>";
+var stbar='<div class="stb-bar"><button class="stb a" onclick="showST(1,this)">① 継続用法</button><button class="stb" onclick="showST(2,this)">② 経験用法</button><button class="stb" onclick="showST(3,this)">③ 完了・結果用法</button></div>';
+var s1='<div id="st1" class="stc">'+G("継続用法「(ずっと)〜している」","I "+e("have lived")+" in Kyoto "+e("for")+" five years."+j("（私は５年間京都に住んでいます。）")+br+"My father "+e("has been")+" busy "+e("since")+" last week."+j("（私の父は先週からずっと忙しいです。）"),"☞ "+k("for＋期間")+"「〜のあいだ」　☞ "+k("since＋起点")+"「〜から」")+Q("【問 1〜4】",[["私は７才のころから英語を勉強しています。","I have studied English since I was seven years old."],["彼女は３時間ここにいます。","She has been here for three hours."],["健二は子どものころからそのネコを飼っています。","Kenji has kept that cat since he was a child."],["私は先週からずっとこのコンピューターを使っていません。","I haven't used this computer since last week."],["先週の日曜日からずっと雨が降っていません。","It hasn't rained since last Sunday."],["彼らは１年間数学を勉強していますか。― はい、勉強しています。","Have they studied math for a year? — Yes, they have."],["彼女は先週から彼女のおばのところに滞在していますか。― いいえ、滞在していません。","Has she stayed at her aunt's since last week? — No, she hasn't."],["彼女はどのくらいこの自転車を使っていますか。― １年間です。","How long has she used this bicycle? — For a year."],["彼はどのくらい彼女と知り合いですか。― ５年間です。","How long has he known her? — For five years."]])+'</div>';
+var s2='<div id="st2" class="stc" style="display:none">'+G("経験用法「〜したことがある」","I "+e("have visited")+" Kyoto three times."+j("（私は３回京都を訪れたことがあります。）")+br+"She "+e("has been to")+" China before."+j("（彼女は以前に中国に行ったことがあります。）"),"☞ "+k("have(has) been to〜")+"は「〜に行ったことがある」という意味を表します。")+IF("<strong>✓ 経験用法でよく使われる語句</strong><br>"+k("once")+"「一度」　"+k("twice")+"「２回」　"+k("〜times")+"「〜回」　"+k("many times")+"「何度も」<br>"+k("before")+"「以前に」　"+k("ever")+"「今までに」　"+k("never")+"「一度も〜ない」")+Q("【問 1〜4】",[["私は一度彼に会ったことがあります。","I have met him once."],["彼女はその自転車を何度も使ったことがあります。","She has used that bicycle many times."],["私たちは以前にその映画を観たことがあります。","We have seen that movie before."],["私は一度もピアノを弾いたことがありません。","I have never played the piano."],["私たちは一度も富士山に登ったことはありません。","We have never climbed Mt. Fuji."],["あなたは今までにテニスをしたことがありますか。― はい、あります。","Have you ever played tennis? — Yes, I have."],["彼女は今までに日本語を話したことがありますか。― いいえ、ありません。","Has she ever spoken Japanese? — No, she hasn't."],["あなたは久美に何回会ったことがありますか。― 私は３回彼女に会ったことがあります。","How many times have you met Kumi? — I have met her three times."],["彼らは何回アメリカを訪れたことがありますか。― 彼らは一度そこを訪れたことがあります。","How many times have they visited America? — They have visited there once."]])+'</div>';
+var s3='<div id="st3" class="stc" style="display:none">'+G("完了・結果用法「〜してしまった・〜したところだ」","I "+e("have already finished")+" my homework."+j("（私はすでに宿題を終えてしまいました。）")+br+"My father "+e("has just washed")+" his car."+j("（私の父はちょうど車を洗ったところです。）")+br+"They "+e("have gone to")+" Hokkaido."+j("（彼らは北海道に行ってしまいました。）")+"  ⇒ 今ここにはいません。","☞ "+k("just")+"「ちょうど」　☞ "+k("already")+"「すでに、もう」（肯定文）　☞ "+k("yet")+"「まだ」（否定文）「もう」（疑問文）")+Q("【問 1〜4】",[["私の弟はすでに自分の部屋を掃除してしまいました。","My brother has already cleaned his room."],["私たちはちょうど家に帰ってきたところです。","We have just come home."],["彼女はまだ皿を洗っていません。","She hasn't washed the dishes yet."],["彼らはまだ駅に到着していません。","They haven't arrived at the station yet."],["あなたはもう宿題をしてしまいましたか。― はい、しました。","Have you done your homework yet? — Yes, I have."],["あなたの妹はもう起きていますか。― いいえ、まだ起きていません。","Has your sister gotten up yet? — No, she hasn't. (No, not yet.)"],["私は腕時計をなくしてしまいました。","I have lost my watch."],["私のおじはカナダに行ってしまいました。","My uncle has gone to Canada."]])+NT("2. 現在完了進行形")+'</div>';
+return base+stbar+s1+s2+s3;}};
+U3[2]={t:"2. 現在完了進行形",c:function(){return G("文法 ▶ 現在完了進行形「ずっと〜している」",pt("現在完了進行形","#d97706")+"I "+e("have been studying")+" English since 2 p.m."+j("（私は午後2時からずっと英語を勉強しています。）"),"☞ "+k("have been〜ing")+"の形で「"+k("ずっと〜している")+"」の意味を表します。")+Q("【問 1〜2】",[["私は2時間ずっと本を読んでいます。","I have been reading a book for two hours."],["私の弟は今朝からずっとテレビを観ています。","My brother has been watching TV since this morning."],["昨日からずっと雨が降り続けています。","It has been raining since yesterday."],["あなたたちはどのくらいの間サッカーをしていますか。","How long have you been playing soccer?"],["あなたの母親はどのくらいの間料理をしていますか。","How long has your mother been cooking?"]])+HS("<strong>現在完了形(継続)と現在完了進行形の違い</strong><br>現在完了形(継続)は"+k("状態の継続")+"（live, know, wantなど）、現在完了進行形は"+k("動作の継続")+"（play, watch, readなど）を表します。")+NT("3. 不定詞を含む構文");}};
+U3[3]={t:"3. 不定詞を含む構文",c:function(){return G("①It〜(for…)to—","To speak English is difficult for me."+j("（私にとって英語を話すことは難しい。）")+br+"= It is difficult "+e("for me")+" "+e("to speak English")+"."+j("（私にとって英語を話すことは難しい。）"),"☞ "+k('"It〜(for…)to—."')+"は「(…にとって)—することは〜だ。」という意味を表します。")+PT("この構文では「It」は形式上の主語で、「to—」の部分が意味上の主語となります。")+Q("【問 1】",[["毎日歩くことはよいことです。","It is good to walk every day."],["彼女にとって本を読むことはおもしろい。","It is interesting for her to read books."],["英語を勉強することは重要です。","It is important to study English."],["健にとってコンピューターを使うことは簡単です。","It is easy for Ken to use a computer."]])+DV()+G("②疑問詞＋to〜","My father taught me "+e("how to play")+" baseball."+j("（私の父は私に野球の仕方を教えてくれました。）"))+IF("<strong>✓ 疑問詞＋to〜（how to〜以外）</strong><br>"+k("what to〜")+"「何を〜したらよいか」　"+k("when to〜")+"「いつ〜したらよいか」　"+k("where to〜")+"「どこで〜したらよいか」")+Q("【問 2】",[["その駅に行く方法を私に教えてください。","Please tell me how to get to the station."],["私はピアノの弾き方がわかりません。","I don't know how to play the piano."],["私は彼女のために何を買えばよいかわかりませんでした。","I didn't know what to buy for her."],["彼女はどこでその本を買えばよいか知りたがっています。","She wants to know where to buy the book."]])+DV()+G("③ask・tell・want＋人＋to〜","I "+e("asked him to open")+" the window."+j("（私は彼に窓を開けるよう頼みました。）")+br+"My mother always "+e("tells me to study")+" English."+j("（私の母はいつも私に英語を勉強するように言います。）")+br+"She "+e("wants him to read")+" this book."+j("（彼女は彼にこの本を読んでほしい。）"))+IF("<strong>✓ ask / tell / want ＋ 人 ＋ to〜</strong><br>"+k("ask＋人＋to〜")+"「人に〜するように頼む」<br>"+k("tell＋人＋to〜")+"「人に〜するように言う」<br>"+k("want＋人＋to〜")+"「人に〜してほしい」")+Q("【問 3】",[["私の父は私にピアノを弾くよう頼みました。","My father asked me to play the piano."],["私たちの先生は私たちにそこに行くように言いました。","Our teacher told us to go there."],["その男の人は彼女に自分を手伝ってほしかった。","The man wanted her to help him."],["母は私に早く起きるように言いませんでした。（否定文）","My mother didn't tell me to get up early."],["あなたは彼に何をするように頼みましたか。（疑問文）","What did you ask him to do?"]])+NT("4. so〜that…・too〜to…");}};
+U3[4]={t:"4. so〜that…・too〜to…",c:function(){return G("①so〜that…「とても〜なので…」　②too〜to…「〜すぎて…できない」","I am "+e("so tired that")+" I can't study."+j("（私はとても疲れているので、勉強することができません。）")+br+"I am "+e("too tired to study")+" today."+j("（私は今日疲れすぎていて勉強することができません。）"),"☞ "+k("so〜that…")+"は「とても〜なので…」（thatのうしろは《主語＋動詞》）　☞ "+k("too〜to…")+"は「〜すぎて…できない」（toのうしろは動詞の原形）")+Q("【問 1〜2】",[["私はとても忙しいので、彼女に会うことができません。","I am so busy that I can't meet her."],["彼らはとても驚いたので、言葉を話すことができませんでした。","They were so surprised that they couldn't speak."],["彼は年をとりすぎているので速く走ることができません。","He is too old to run fast."],["タケシは疲れすぎていて歩くことができませんでした。","Takeshi was too tired to walk."]])+DV()+G("③so〜that…とtoo〜to…の書きかえ","I am "+e("so busy that")+" I can't help you. = I am "+e("too busy to")+" help you."+j("（私は忙しすぎてあなたを手伝うことができません。）")+br+"The book is "+e("so difficult that")+" I can't read "+e("it")+". = The book is "+e("too difficult for me to")+" read."+j("（その本は私には難しすぎて読むことができません。）"))+PT("ポイント①: can't(couldn't)が入っているときだけ書きかえが可能。　ポイント②: thatの前後の主語が異なる場合は「"+k("too〜for〜to…")+"」の形。　ポイント③: 主語が異なる場合、so〜that…の文には代名詞「"+k("it")+"」が必要。←特に注意")+Q("【問 3】次の日本文をso〜that…、too〜(for—)to…を使った2通りの英文にしなさい。",[["彼はとても疲れていたので、早く起きることができませんでした。","He was so tired that he couldn't get up early. / He was too tired to get up early."],["その箱はとても重かったので、彼はそれを運ぶことができませんでした。","The box was so heavy that he couldn't carry it. / The box was too heavy for him to carry."],["私はとても眠かったので、テレビを観ることができませんでした。","I was so sleepy that I couldn't watch TV. / I was too sleepy to watch TV."],["彼女はとても忙しかったので、私を手伝うことができませんでした。","She was so busy that she couldn't help me. / She was too busy to help me."]])+NT("5. call A＋B");}};
+U3[5]={t:"5. call A＋B",c:function(){return G("文法 ▶ call A＋B・name A＋B・make A＋B","I "+e("call him Ken")+"."+j("（私は彼をケンとよびます。）")+br+"I "+e("named the dog Pochi")+"."+j("（私はその犬をポチと名づけました。）")+br+"The news "+e("made me happy")+"."+j("（その知らせは私を幸せにしました。）"))+IF("<strong>✓ A を目的語，B を補語</strong><br>"+k("call A＋B")+"「AをBとよぶ」<br>"+k("name A＋B")+"「AをBと名づける」<br>"+k("make A＋B")+"「AをBにする」")+Q("【問】",[["私たちは彼女をマリとよびます。","We call her Mari."],["彼はそのネコをタマと名づけました。","He named the cat Tama."],["その手紙は私を悲しくさせました。","The letter made me sad."],["この映画は彼を有名にしました。","This movie made him famous."],["みんなは彼をトム（Tom）とよんでいます。","Everyone calls him Tom."]])+NT("6. 使役動詞（原形不定詞）");}};
+U3[6]={t:"6. 使役動詞（原形不定詞）",c:function(){return G("文法 ▶ let・help＋人＋動詞の原形（原形不定詞）",e("Let")+" him "+e("go")+" abroad."+j("（彼を外国に行かせてください。）")+br+"She "+e("helped")+" her mother "+e("cook")+" lunch."+j("（彼女は母が昼食を作るのを手伝いました。）"),"☞ 「"+k("let＋人＋動詞の原形")+"」「人に〜させる（許可）」　☞ 「"+k("help＋人＋動詞の原形")+"」「人が〜するのを助ける」")+IF("<strong>✓ 「〜させる」の使役動詞【発展】</strong><br>"+k("let")+"…（本人の希望を叶えて）〜させる　例）Let her know this.（彼女にこのことを知らせてください。）<br>"+k("make")+"…（強制的に）〜させる　例）I will make him do the work.（私は彼にその仕事をさせるつもりです。）<br>"+k("have")+"…（本人に頼んで）〜させる、〜してもらう　例）We had her take our picture.（私たちは彼女に写真をとってもらいました。）")+Q("【問】",[["あなたにおもしろい話をさせてください。","Let me tell you an interesting story."],["私は彼が手紙を書くのを手伝いました。","I helped him write a letter."],["私たちは父が車を洗うのを手伝いました。","We helped our father wash the car."],["あなたの部屋を私に見させてください。","Let me see your room."],["先生は私たちに教室を掃除させました。","The teacher made us clean the classroom."],["彼の父は彼を自転車で学校に行かせてくれました。","His father let him go to school by bicycle."],["彼女は私が重い荷物を運ぶのを手伝ってくれました。","She helped me carry the heavy baggage."],["母は私に毎日部屋を掃除させます。","My mother makes me clean my room every day."]])+NT("7. 間接疑問文");}};
+U3[7]={t:"7. 間接疑問文",c:function(){return G("文法 ▶ 間接疑問文（疑問詞＋主語＋動詞）",pt("疑問文","#1a5fa8")+"Who is she?"+j("（彼女はだれですか。）")+br+pt("間接疑問文","#d97706")+"I know "+e("who she is")+"."+j("（私は彼女がだれなのか知っています。）")+br+pt("疑問文","#1a5fa8")+"Where does he live?"+j("（彼はどこに住んでいますか。）")+br+pt("間接疑問文","#d97706")+"I don't know "+e("where he lives")+"."+j("（私は彼がどこに住んでいるのか知りません。）"),"☞ 間接疑問文は"+k('"疑問詞＋主語＋動詞"')+"が基本の形で、疑問詞よりあとの文は"+k("ふつうの肯定文の語順")+"です。")+Q("【問 1〜4】",[["私はだれがこの手紙を書いたのか知っています。","I know who wrote this letter."],["由美は彼が何をほしがっているかわかりません。","Yumi doesn't know what he wants."],["あなたはマイクがどこの出身か知っていますか。","Do you know where Mike is from?"],["She doesn't know where she should go. → shouldを使わない文に","She doesn't know where to go."],["I know when to start. → shouldを使った文に","I know when I should start."],["私は彼女が何をしているか知りませんでした。（時制の一致）","I didn't know what she was doing."],["私はだれが川で泳いでいるか知っていました。","I knew who was swimming in the river."],["彼女の誕生日はいつなのか私に教えてください。（tellを使って、pleaseで始まる文に）","Please tell me when her birthday is."],["コンピューターをどのように使うか、私に教えてくれませんか。（showを使って、canで始まる文に）","Can you show me how to use a computer?"]])+NT("8. 分詞");}};
+U3[8]={t:"8. 分詞",c:function(){
+var stbar='<div class="stb-bar"><button class="stb a" onclick="showST(1,this)">① 現在分詞</button><button class="stb" onclick="showST(2,this)">② 過去分詞</button></div>';
+var s1='<div id="st1" class="stc">'+
+G("現在分詞「〜している」（後置修飾）","I know the boy. He is running with a dog."+j("（私はその男の子を知っています。彼はイヌと走っています。）")+br+"I know "+e("the boy running")+" with a dog."+j("（私はイヌと走っているその男の子を知っています。）"),"☞ 現在分詞（"+k("動詞の原形+ing")+"）は「"+k("〜している")+"」という意味を表します。　☞ "+k("うしろから名詞を修飾")+"します。（後置修飾）")
++Q("【問 1】",[
+  ["私は久美と話しているその男の子を知っています。","I know the boy talking with Kumi."],
+  ["公園を歩いているその男の人を見なさい。","Look at the man walking in the park."],
+  ["私には北海道に住んでいるおばがいます。","I have an aunt living in Hokkaido."],
+  ["あなたはピアノを弾いているその女の子を知っていますか。（疑問文）","Do you know that girl playing the piano?"],
+  ["窓のそばに座っているその男の人は私の父ではありません。（否定文）","The man sitting by the window is not my father."]
+])
++DV()
++G("現在分詞１語の場合は前から名詞を修飾","I know the boy. He is running."+br+"I know "+e("the running boy")+"."+j("（私は走っているその男の子を知っています。）"),"☞ 現在分詞1語で修飾する場合は"+k("前から名詞を修飾")+"します。")
++Q("【問 2】",[
+  ["私は立っているあの男の人を知っています。","I know that standing man."],
+  ["眠っている赤ちゃん（baby）を見なさい。","Look at the sleeping baby."],
+  ["あの歌っている女の人を知っていますか。（疑問文）","Do you know that singing woman?"],
+  ["眠っている子ども（child）を起こさないでください。","Don't wake up the sleeping child."]
+])
++DV()
++G("現在分詞が主語を修飾する場合",e("The boy running")+" with a dog is my brother."+j("（イヌと走っている男の子は私の弟です。）"),"☞ 現在分詞は"+k("主語を修飾する")+"場合もあります。")
++Q("【問 3】",[
+  ["手紙を書いている女の子は私の友だちです。","The girl writing a letter is my friend."],
+  ["通りを歩いているあのネコは私のものです。","That cat walking on the street is mine."],
+  ["公園で走っているその男の子はタケシですか。（疑問文）","Is the boy running in the park Takeshi?"],
+  ["ここで英語を教えているあの女性は私の母ではありません。（否定文）","That woman teaching English here is not my mother."]
+])
++'</div>';
+var s2='<div id="st2" class="stc" style="display:none">'+
+G("過去分詞「〜された（〜されている）」（後置修飾）","This is the hotel. It was built last year."+j("（これはホテルです。それは昨年建てられました。）")+br+"This is "+e("the hotel built")+" last year."+j("（これは昨年建てられたホテルです。）"),"☞ 過去分詞（"+k("動詞の原形+ed・不規則変化")+"）は「"+k("〜された（〜されている）")+"」という意味を表します。　☞ "+k("うしろから名詞を修飾")+"します。（後置修飾）")
++Q("【問 1】",[
+  ["私は英語で書かれた本を読んでいます。","I am reading a book written in English."],
+  ["これは彼によって撮られた写真です。","This is a picture (photo) taken by him."],
+  ["これは日本で作られた時計ではありません。（否定文）","This is not a watch made in Japan."],
+  ["あれはケンによって書かれた手紙ですか。（疑問文）","Is that a letter written by Ken?"]
+])
++DV()
++G("過去分詞１語の場合は前から名詞を修飾","I bought a car. It was used."+j("（私は車を買いました。それは使われていました。）")+br+"I bought "+e("a used car")+"."+j("（私は中古車[使われた車]を買いました。）"),"☞ 過去分詞1語で修飾する場合は"+k("前から名詞を修飾")+"します。")
++Q("【問 2】",[
+  ["私はその壊れた（壊された）窓を見ました。","I saw the broken window."],
+  ["私は彼のなくした自転車を見つけました。","I found his lost bicycle."],
+  ["彼女は使われたカメラを持っています。","She has a used camera."],
+  ["その盗まれた（stolen）自転車はあなたのものですか。（疑問文）","Is that stolen bicycle yours?"]
+])
++DV()
++G("過去分詞が主語を修飾する場合",e("The car washed")+" by Ken yesterday is his father's."+j("（ケンによって昨日洗われたその車は彼の父のものです。）"),"☞ 過去分詞は"+k("主語を修飾する")+"場合もあります。")
++Q("【問 3】",[
+  ["私の家の近くに建てられた学校は大きいです。","The school built near my house is big."],
+  ["英語は多くの国で話されている言語です。","English is a language spoken in many countries."],
+  ["ケンによって昨日洗われた車は新しくありませんでした。（否定文）","The car washed by Ken yesterday was not new."],
+  ["英語で書かれたその本はおもしろいですか。（疑問文）","Is the book written in English interesting?"]
+])
++NT("9. 名詞を修飾する文（接触節）")
++'</div>';
+return stbar+s1+s2;}};
+U3[9]={t:"9. 名詞を修飾する文（接触節）",c:function(){return(
+G("文法 ▶ 名詞を修飾する文（接触節）",
+  "I took this picture."+j("（私はこの写真を撮りました。）")+br+
+  "This is a picture "+e("I took")+"."+j("（これは私が撮った写真です。）"),
+  "☞ 「"+k("主語＋動詞")+"」（接触節）で、うしろから直前の名詞を修飾する（説明を加える）ことができます。　☞ 名詞を後ろから修飾することを"+k("後置修飾")+"といいます。")
++Q("【問 1】",[
+  ["これは私が買ったペンです。","This is a pen (that) I bought."],
+  ["私は彼が昨年書いたその本がほしいです。","I want the book he wrote last year."],
+  ["これは彼女がいちばん好きな歌です。","This is the song she likes the best."],
+  ["これはあなたが昨日書いた手紙ですか。（疑問文）","Is this a letter (that) you wrote yesterday?"],
+  ["私が先週読んだその本はおもしろくありませんでした。（否定文）","The book (that) I read last week was not interesting."]
+])
++DV()
++IF("<strong>✓ 名詞につく「a」と「the」</strong><br>"+
+  k("a")+"→ その名詞がもともと複数（多数）存在するもののうちのひとつである場合。<br>"+
+  "例）This is "+k("a book")+" I found in the library.（これは私が図書館で見つけた本です。）<br>"+
+  k("the")+"→ その名詞が１つしか存在しない場合や、聞き手もそのものをすでに知っていて特定できる場合など。<br>"+
+  "例）This is "+k("the letter")+" she wrote yesterday.（これは彼女が昨日書いた手紙です。）")
++G("接触節が主語を修飾する場合",
+  "I saw a Japanese boy there."+j("（私はそこで日本人の少年に出会いました。）")+br+
+  e("The boy I saw there")+" was Japanese."+j("（私がそこで出会った少年は日本人でした。）"),
+  "☞ 「主語＋動詞」の接触節は、"+k("主語を修飾")+"することもできます。")
++Q("【問 2】",[
+  ["私が訪れたい場所はオーストラリアです。","The place I want to visit is Australia."],
+  ["私がケンからもらった花は美しいです。","The flowers I got from Ken are beautiful."],
+  ["私が昨日買った本はおもしろいです。","The book I bought yesterday is interesting."],
+  ["私が知っているその男の人は医者ではありません。（否定文）","The man (that) I know is not a doctor."],
+  ["あなたが昨日会った女の人は先生ですか。（疑問文）","Is the woman (that) you met yesterday a teacher?"]
+])
++DV()
++G("否定文・疑問文（接触節を使った文）",
+  "This is "+e("not")+" a letter you wrote."+j("（これはあなたが書いた手紙ではありません。）")+br+
+  e("Is that")+" the movie you saw yesterday?"+j("（あれはあなたが昨日見た映画ですか。）"),
+  "☞ 接触節を含む文でも、否定文・疑問文の作り方は通常の文と同じです。")
++Q("【問 3】",[
+  ["これはあなたが書いた手紙ではありません。","This is not a letter (that) you wrote."],
+  ["あれはあなたが昨日見た映画ですか。","Is that the movie (that) you saw yesterday?"],
+  ["彼女が昨日書いた手紙は長くありませんでした。（否定文）","The letter (that) she wrote yesterday was not long."],
+  ["あなたが先週読んだ本はおもしろかったですか。（疑問文）","Was the book (that) you read last week interesting?"]
+])
++NT("10. 関係代名詞")
+);}};
+U3[10]={t:"10. 関係代名詞",c:function(){
+var stbar='<div class="stb-bar"><button class="stb a" onclick="showST(1,this)">① 主格</button><button class="stb" onclick="showST(2,this)">② 目的格</button></div>';
+var s1='<div id="st1" class="stc">'+
+G("関係代名詞①（主格）who / which / that",
+  "I have an uncle. He lives in Hokkaido."+j("（私にはおじがいます。彼は北海道に住んでいます。）")+br+
+  "I have "+e("an uncle who(that) lives")+" in Hokkaido."+j("（私には北海道に住んでいるおじがいます。）")+br+
+  "This is the letter. It came this morning."+br+
+  "This is "+e("the letter which(that) came")+" this morning."+j("（これは今朝来た手紙です。）"),
+  "☞ 先行詞が"+k("人")+"のときは"+k("who")+"、"+k("物や動物")+"のときは"+k("which")+"を使います。　☞ who・whichの代わりに"+k("that")+"を使うこともできます。")
++Q("【問 1】",[
+  ["私は速く走ることができるその男の子を知っています。","I know the boy who(that) can run fast."],
+  ["私には上手にピアノを弾く妹がいます。","I have a sister who(that) can play the piano well."],
+  ["私の父は速く走る車を持っています。","My father has a car which(that) runs fast."],
+  ["あなたは英語を話すことができる友だちがいますか。（疑問文）","Do you have a friend who can speak English?"],
+  ["私はこの近くに住んでいる先生を知りません。（否定文）","I don't know the teacher who lives near here."]
+])
++DV()
++G("関係代名詞が主語を修飾する場合",
+  e("The girl who(that) can speak English well")+" is my sister."+j("（上手に英語を話すことができるその女の子は私の妹です。）")+br+
+  e("The dog which(that) swims well")+" is mine."+j("（上手に泳ぐそのイヌは私のものです。）"),
+  "☞ 関係代名詞は"+k("主語を修飾する")+"場合もあります。")
++Q("【問 2】",[
+  ["サッカーをしているその男の子は私の友だちです。","The boy who(that) is playing soccer is my friend."],
+  ["10年前に建てられたその家は私のおじのものです。","The house which(that) was built ten years ago is my uncle's."],
+  ["上手に英語を話すことができるその女の子はあなたの友だちですか。（疑問文）","Is that girl who can speak English well your friend?"],
+  ["この公園の近くに住んでいるその男の人は医者ではありません。（否定文）","The man who lives near this park is not a doctor."]
+])
++DV()
++G("分詞の文 ⇔ 関係代名詞の文（書きかえ）",
+  "I have a friend "+e("living")+" in Canada. = I have a friend "+e("who(that) lives")+" in Canada."+j("（私にはカナダに住んでいる友だちがいます。）")+br+
+  "The cake "+e("made")+" by Kumi was good. = The cake "+e("which(that) was made")+" by Kumi was good."+j("（久美によって作られたケーキはおいしかった。）"),
+  "☞ 現在分詞・過去分詞の文を、関係代名詞を使って書きかえることができます。")
++Q("【問 3】次の英文を関係代名詞を使った文に書きかえなさい。",[
+  ["Do you know the boy playing baseball?","Do you know the boy who(that) is playing baseball?"],
+  ["The man walking in the park is Mr. Brown.","The man who(that) is walking in the park is Mr. Brown."],
+  ["This is the letter written by Takuya.","This is the letter which(that) was written by Takuya."],
+  ["I don't know the woman singing on the stage.","I don't know the woman who is singing on the stage."],
+  ["Is that the car washed by your father?","Is that the car which was washed by your father?"]
+])
++'</div>';
+var s2='<div id="st2" class="stc" style="display:none">'+
+G("関係代名詞②（目的格）that / which（省略可）",
+  "I know the boy. You saw him yesterday."+j("（私はその男の子を知っています。あなたは昨日彼に会いました。）")+br+
+  "I know "+e("the boy (that)")+" you saw yesterday."+j("（私はあなたが昨日会った男の子を知っています。）")+br+
+  "This is the book. I read it last evening."+br+
+  "This is "+e("the book (that)")+" I read last evening."+j("（これは私が昨晩読んだ本です。）"),
+  "☞ 目的格の代名詞をthatに変えて直前の名詞（先行詞）を修飾します。　☞ 先行詞が物のときはwhichも使えます。　☞ 目的格の関係代名詞は"+k("省略")+"することができます。")
++Q("【問 1】",[
+  ["佐藤先生（Ms. Sato）はみんなが大好きな先生です。","Ms. Sato is a teacher (that/who) everyone likes."],
+  ["彼女は私が会いたい歌手です。","She is a singer (that) I want to meet."],
+  ["これらは私の父が撮った写真です。","These are pictures (that) my father took."],
+  ["あなたは私が紹介したい人を知っていますか。（疑問文）","Do you know the person (that) I want to introduce?"],
+  ["これは彼があなたに送った手紙ではありません。（否定文）","This is not the letter (that) he sent to you."]
+])
++DV()
++G("関係代名詞（目的格）が主語を修飾する場合",
+  e("The boy (that)")+" you met yesterday is my brother."+j("（あなたが昨日会ったその男の子は私の兄です。）")+br+
+  e("The cake (that)")+" she made for me was good."+j("（彼女が私のために作ってくれたケーキはおいしかった。）"),
+  "☞ 関係代名詞（目的格）は"+k("主語を修飾する")+"場合もあります。")
++Q("【問 2】",[
+  ["私たちが助けたその男の人は彼のおじです。","The man (that) we helped is his uncle."],
+  ["私が先週読んだ本はおもしろかった。","The book (that) I read last week was interesting."],
+  ["彼が昨日買った自転車は新しくありませんでした。（否定文）","The bicycle (that) he bought yesterday was not new."],
+  ["あなたがほしいバッグはこれですか。（疑問文）","Is this the bag (that) you want?"]
+])
++NT("11. 仮定法過去")
++'</div>';
+return stbar+s1+s2;}};
+U3[11]={t:"11. 仮定法過去",c:function(){return(
+G("直説法 vs 仮定法",
+  pt("直説法","#1a5fa8")+"If it is sunny tomorrow, I will go fishing."+j("（もし明日晴れれば、私は釣りに行きます。）")+br+
+  "→ If it is sunny tomorrow の部分は、単なる"+k("条件")+"を表しています。"+br+br+
+  pt("仮定法","#d97706")+"If it were sunny, I would go fishing."+j("（もし晴れていれば、私は釣りに行くのに。）")+br+
+  "→ If it were sunny の部分は、"+k("現在の事実とは逆のことを仮定・想像")+"しています。")
++DV()
++G("①if〜（仮定法過去）",
+  "If I "+e("were")+" a bird, I "+e("could fly")+" to you."+j("（もし私が鳥なら、あなたのところに飛んでいけるのに。）")+br+
+  "→ Because I am not a bird, I cannot fly to you."+j("（私は鳥ではないので、あなたのところに飛んでいけません。）")+br+
+  "If I "+e("knew")+" his address, I "+e("could write")+" to him."+j("（もし彼の住所を知っていれば、私は彼に手紙が書けるのに。）")+br+
+  "→ Because I don't know his address, I cannot write to him."+j("（彼の住所を知らないので、私は彼に手紙が書けません。）"))
++IF("<strong>✓ 仮定法過去の形</strong><br>"+
+  k("If＋主語＋動詞の過去形（be動詞ならwere）")+"，主語＋助動詞の過去形（could, wouldなど）＋動詞の原形<br>"+
+  "意味：「もし〜なら、…なのに。」　→ ①現在の事実に反する仮定　②実現する可能性が低い想像")
++Q("【問 1】",[
+  ["もし私があなたなら、私はそうしないだろうに。","If I were you, I would not do so."],
+  ["もし彼が来れば、私たちといっしょにサッカーができるのに。","If he came, we could play soccer together."],
+  ["もし私が金持ち（rich）なら、外国に行けるのに。","If I were rich, I could go abroad."],
+  ["もし今日雨でなければ、公園に行けるのに。（否定文）","If it were not rainy today, we could go to the park."],
+  ["もし私が彼の電話番号を知っていれば、彼に電話をするのに。","If I knew his phone number, I would call him."]
+])
++DV()
++G("②I wish〜（〜ならなあ）",
+  "I wish I "+e("had")+" many friends."+j("（私に友だちがたくさんいればなあ。）")+br+
+  "I wish I "+e("could speak")+" English."+j("（私が英語を話せればなあ。）")+br+
+  "I wish she "+e("were")+" here."+j("（彼女がここにいたらなあ。）"))
++IF("<strong>✓ I wish〜の形</strong><br>"+
+  k("I wish＋主語＋動詞（助動詞）の過去形（be動詞ならwere）")+"<br>"+
+  "意味：「〜ならなあ。」　→ ①現在の事実に反する願望　②実現する可能性が低い願望")
++Q("【問 2】",[
+  ["私が彼女の名前を知っていればなあ。","I wish I knew her name."],
+  ["私がもっと速く走れたらなあ。","I wish I could run faster."],
+  ["あなたがここにいてくれたらなあ。","I wish you were here."],
+  ["もっと時間があればなあ。","I wish I had more time."],
+  ["私が鳥だったらなあ。","I wish I were a bird."]
+])
++HS("仮定法過去では、たとえば主語が「I」や「he」などのときでも"+k("were")+"を使います。（※近年の英語では「was」を使ってもまちがいとはいえません。）")
++'<div class="nt" style="background:#e8f1fb;border-color:#1a5fa8;color:#1a5fa8;font-size:15px;text-align:center;padding:14px">🎉🎉 <span class="nx">中 1〜中 3 全 41 単元・400問　完全制覇！おめでとうございます！！</span> 🎉🎉</div>'
+);}};
+var NAV={
+  1:[["1. I am〜・You are〜",1],["2. 一般動詞①",2],["3. 助動詞 can①",3],["4. 命令文",4],["5. 複数形・How many〜？",5],["6. This is〜・That is〜",6],["7. What do you〜？",7],["8. What is this？",8],["9. 疑問詞＋is・疑問詞＋do",9],["10. What＋名詞",10],["11. He is〜・She is〜",11],["12. 一般動詞②(三人称単数)",12],["13. 人称代名詞",13],["14. 助動詞 can",14],["15. 現在進行形",15],["16. 感嘆文",16],["17. 一般動詞の過去形",17],["18. 疑問詞",18]],
+  2:[["1. be動詞の過去形",1],["2. 過去進行形",2],["3. 未来形（be going to〜）",3],["4. must・have to〜",4],["5. 接続詞",5],["6. 助動詞の会話表現",6],["7. There is〜",7],["8. 不定詞・動名詞",8],["9. look〜・become〜",9],["10. give＋人＋物",10],["11. 比較の文",11],["12. 受け身の文",12]],
+  3:[["1. 現在完了形",1],["2. 現在完了進行形",2],["3. 不定詞を含む構文",3],["4. so〜that…・too〜to─",4],["5. call A＋B",5],["6. 使役（原形不定詞）",6],["7. 間接疑問文",7],["8. 分詞",8],["9. 名詞を修飾する文",9],["10. 関係代名詞",10],["11. 仮定法過去",11]]
+};
+var DATA={1:U1,2:U2,3:U3};
+var curGrade=1;
+function showST(n,btn){
+  document.querySelectorAll('.stc').forEach(function(el){el.style.display='none';});
+  document.querySelectorAll('.stb').forEach(function(b){b.classList.remove('a');});
+  document.getElementById('st'+n).style.display='block';
+  btn.classList.add('a');
+}
+function switchGrade(g){
+  curGrade=g;
+  document.querySelectorAll('.tb').forEach(function(b,i){b.classList.toggle('a',i===g-1);});
+  buildNav(g);
+  var first=NAV[g][0][1];
+  if(first){goUnit(first);}else{document.getElementById('ct').innerHTML='<div class="sn">🚧 この学年は現在準備中です。</div>';}
+}
+function buildNav(g){
+  var lbl=g===1?"【中 1】単元一覧":g===2?"【中 2】単元一覧":"【中 3】単元一覧";
+  var h='<div class="st">'+lbl+'</div>';
+  NAV[g].forEach(function(item,i){
+    var n=item[1];
+    var style=n?'':'style="color:#aaa;cursor:default"';
+    var click=n?'onclick="goUnit('+n+')"':'';
+    h+='<button class="nv" '+click+' '+style+' data-idx="'+i+'">'+item[0]+'</button>';
+  });
+  document.getElementById('sb').innerHTML=h;
+}
+function goUnit(n){
+  var d=DATA[curGrade][n];
+  var html;
+  if(d){
+    try{
+      var gl=curGrade===1?"中 1":curGrade===2?"中 2":"中 3";
+      html='<div class="lh">【'+gl+'】'+d.t+'</div><div class="lb">'+d.c()+'</div>';
+    }catch(err){
+      html='<div class="sn">表示エラー：'+err.message+'</div>';
+    }
+  }else{
+    html='<div class="sn">🚧 この単元は現在準備中です。</div>';
+  }
+  document.getElementById('ct').innerHTML=html;
+  document.querySelectorAll('.nv').forEach(function(b){
+    var idx=parseInt(b.getAttribute('data-idx'));
+    var match=NAV[curGrade][idx]&&NAV[curGrade][idx][1]===n;
+    b.classList.toggle('a',match);
+  });
+}
+function ta(btn){
+  var a=btn.closest('.qi').querySelector('.aa');
+  a.classList.toggle('v');
+  btn.textContent=a.classList.contains('v')?'隠す':'解答を見る';
+}
+buildNav(1);goUnit(1);
+</script>

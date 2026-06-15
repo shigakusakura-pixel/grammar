@@ -400,6 +400,64 @@ function ta(btn){
   var a=btn.closest('.qi').querySelector('.aa');
   a.classList.toggle('v');
   btn.textContent=a.classList.contains('v')?'隠す':'解答を見る';
+
+  // 【追加】「解答を見る」を開いたタイミングでFirebaseに送信
+  if (a.classList.contains('v') && window.sendLearningRecord) {
+    // 問題番号を取得
+    var qnNode = btn.closest('.qi').querySelector('.qn');
+    var qNum = qnNode ? qnNode.textContent : '';
+    // 単元名を取得（例：「【中 1】1. I am〜・You are〜」）
+    var unitTitleNode = document.querySelector('.lh');
+    var unitTitle = unitTitleNode ? unitTitleNode.textContent : '中学英文法';
+    
+    window.sendLearningRecord(unitTitle, '問' + qNum);
+  }
 }
 buildNav(1);goUnit(1);
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  // ① My スタディ 用のFirebase設定
+  const firebaseConfig = {
+    apiKey: "AIzaSyBQjnlOfeVvWQJHDxGE9cq-jGsYF3uo0PY",
+    authDomain: "mystudy-portal.firebaseapp.com",
+    projectId: "mystudy-portal",
+    storageBucket: "mystudy-portal.firebasestorage.app",
+    messagingSenderId: "62253255474",
+    appId: "1:62253255474:web:817a3cbd1ab3ea63e7e52b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // ② URLの「?student=生徒ID」から名札を取得
+  const urlParams = new URLSearchParams(window.location.search);
+  const studentId = urlParams.get('student') || 'ゲスト';
+
+  const sentRecords = new Set();
+
+  // ③ 送信用の処理
+  window.sendLearningRecord = async function(unitId, questionId) {
+    const recordKey = unitId + "-" + questionId;
+
+    if (sentRecords.has(recordKey)) return;
+    sentRecords.add(recordKey);
+
+    try {
+      await addDoc(collection(db, "learning_records"), {
+        studentId: studentId,
+        subject: "中学英文法",
+        unit: unitId,
+        questionId: questionId,
+        action: "解答を確認",
+        timestamp: serverTimestamp()
+      });
+      console.log(`生徒 ${studentId} の記録送信成功: 単元 ${unitId} / 問題 ${questionId}`);
+    } catch (e) {
+      console.error("記録の送信に失敗しました: ", e);
+    }
+  };
 </script>

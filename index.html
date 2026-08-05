@@ -31,6 +31,13 @@
 .mb.a{background:#1a5fa8;color:white}
 .mb:hover:not(.a){background:#d0e4f7}
 
+/* 用法タブ（現在完了形用） */
+.stb-bar{display:flex;gap:3px;margin-bottom:12px;border-bottom:2px solid #1a5fa8;padding-bottom:0}
+.stb{padding:8px 18px;border:none;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:bold;border-radius:8px 8px 0 0;background:#e8f1fb;color:#1a5fa8;margin-bottom:-2px}
+.stb.a{background:#1a5fa8;color:white}
+.stb:hover:not(.a){background:#d0e4f7}
+.stc{padding-top:6px}
+
 .g{background:#e8f1fb;border-left:4px solid #1a5fa8;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:14px}
 .gl{font-size:12px;font-weight:500;color:#1a5fa8;letter-spacing:.08em;margin-bottom:6px}
 .gs{font-size:15.5px;line-height:2.1;color:#222}
@@ -146,8 +153,18 @@ function setMode(m){
   renderCurrentUnit();
 }
 
-function renderQuestionSet(qs, isTest){
-  return qs.map(function(qa, i){
+function showST(n, btn){
+  document.querySelectorAll('.stc').forEach(function(el){el.style.display='none';});
+  document.querySelectorAll('.stb').forEach(function(b){b.classList.remove('a');});
+  var target = document.getElementById('st'+n);
+  if(target) target.style.display='block';
+  btn.classList.add('a');
+}
+
+function renderQuestionSet(qs, isTest, offsetIdx){
+  offsetIdx = offsetIdx || 0;
+  return qs.map(function(qa, idx){
+    var i = offsetIdx + idx;
     var jp = qa[0];
     var en = qa[1];
     var cleanEn = en.replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '').split('/')[0].trim();
@@ -184,7 +201,7 @@ function renderQuestionSet(qs, isTest){
 
     return '<div class="qi" id="qi-'+i+'">' +
              '<div class="qr">' +
-               '<div class="qn">'+(i+1)+'</div>' +
+               '<div class="qn">'+(idx+1)+'</div>' +
                '<div class="qt">'+jp+'</div>' +
                contentHtml +
            '</div>';
@@ -204,10 +221,18 @@ function ta(btn){
   var a=btn.closest('.qi').querySelector('.aa');
   a.classList.toggle('v');
   btn.textContent=a.classList.contains('v')?'隠す':'解答を見る';
+
+  if (a.classList.contains('v') && window.sendLearningRecord) {
+    var qnNode = btn.closest('.qi').querySelector('.qn');
+    var qNum = qnNode ? qnNode.textContent : '';
+    var unitTitleNode = document.querySelector('.lh');
+    var unitTitle = unitTitleNode ? unitTitleNode.textContent : '中学英文法';
+    window.sendLearningRecord(unitTitle, '問' + qNum);
+  }
 }
 
 var PTBL='<table class="t1"><tr><th>名詞の種類</th><th>複数形のつくり方</th><th>例</th></tr><tr><td>一般的な名詞</td><td class="rd">語尾に s</td><td>pen→<b style="color:#1a5fa8">pens</b></td></tr><tr><td>語尾が s,sh,ch,o,x</td><td class="rd">語尾に es</td><td>box→<b style="color:#1a5fa8">boxes</b></td></tr><tr><td>語尾が子音字＋y</td><td class="rd">y を i にかえて es</td><td>city→<b style="color:#1a5fa8">cities</b></td></tr><tr><td>語尾が f,fe</td><td class="rd">f,fe を v にかえて es</td><td>life→<b style="color:#1a5fa8">lives</b></td></tr><tr><td>不規則に変化する</td><td class="rd">それぞれ</td><td>man→<b style="color:#1a5fa8">men</b></td></tr><tr><td>変化しない</td><td class="rd">同じ</td><td>fish→<b style="color:#1a5fa8">fish</b></td></tr></table>';
-var PRTBL='<table class="t2"><tr><th rowspan="2" style="width:48px"></th><th colspan="4">単 数</th><th colspan="4">複 数</th></tr><tr><th>主格</th><th>所有格</th><th>目的格</th><th>所有代</th><th>主格</th><th>所有格</th><th>目的格</th><th>所有代</th></tr><tr><td class="lb2">1人称</td><td class="en">I</td><td class="en">my</td><td class="en">me</td><td class="en">mine</td><td class="en">we</td><td class="en">our</td><td class="en">us</td><td class="en">ours</td></tr><tr><td class="lb2">2人称</td><td class="en">you</td><td class="en">your</td><td class="en">you</td><td class="en">yours</td><td class="en">you</td><td class="en">your</td><td class="en">you</td><td class="en">yours</td></tr><tr><td class="lb2" rowspan="3">3人称</td><td class="en">he</td><td class="en">his</td><td class="en">him</td><td class="en">his</td><td class="en" rowspan="3">they</td><td class="en" rowspan="3">their</td><td class="en" rowspan="3">them</td><td class="en" rowspan="3">theirs</td></tr><tr><td class="en">she</td><td class="en">her</td><td class="en">her</td><td class="en">hers</td></tr><tr><td class="en">it</td><td class="en">its</td><td class="en">it</td><td style="color:#aaa">—</td></tr></table>';
+var PRTBL='<table class="t2"><tr><th rowspan="2" style="width:48px"></th><th colspan="4">単 数</th><th colspan="4">複 数</th></tr><tr><th>主格</th><th>所有格</th><th>目的格</th><th>所有代</th><th>主格</th><th>所有格</th><th>目的格</th><th>所有代</th></tr><tr><td class="lb2">1人称</td><td class="en">I</td><td class="en">my</td><td class="en">me</td><td class="en">mine</td><td class="en">we</td><td class="en">our</td><td class="en">us</td><td class="en">ours</td></tr><tr><td class="lb2">2人称</td><td class="en">you</td><td class="en">your</td><td class="en">you</td><td class="en">yours</td><td class="en">you</td><td class="en">your</td><td class="en">yours</td></tr><tr><td class="lb2" rowspan="3">3人称</td><td class="en">he</td><td class="en">his</td><td class="en">him</td><td class="en">his</td><td class="en" rowspan="3">they</td><td class="en" rowspan="3">their</td><td class="en" rowspan="3">them</td><td class="en" rowspan="3">theirs</td></tr><tr><td class="en">she</td><td class="en">her</td><td class="en">her</td><td class="en">hers</td></tr><tr><td class="en">it</td><td class="en">its</td><td class="en">it</td><td style="color:#aaa">—</td></tr></table>';
 var VOCA='<div class="vc"><div class="vcl">✓ いろいろな一般動詞</div><div class="vcg"><div class="vci"><span class="vw">like</span>「好きである」</div><div class="vci"><span class="vw">study</span>「勉強する」</div><div class="vci"><span class="vw">play</span>「（スポーツを）する」</div><div class="vci"><span class="vw">wash</span>「洗う」</div><div class="vci"><span class="vw">come</span>「来る」</div><div class="vci"><span class="vw">write</span>「書く」</div><div class="vci"><span class="vw">speak</span>「話す」</div><div class="vci"><span class="vw">cook</span>「料理する」</div><div class="vci"><span class="vw">eat</span>「食べる」</div><div class="vci"><span class="vw">use</span>「使う」</div><div class="vci"><span class="vw">drink</span>「飲む」</div><div class="vci"><span class="vw">listen</span>「聴く」</div><div class="vci"><span class="vw">have</span>「持っている」</div><div class="vci"><span class="vw">go</span>「行く」</div><div class="vci"><span class="vw">love</span>「大好きである」</div><div class="vci"><span class="vw">want</span>「ほしい」</div><div class="vci"><span class="vw">read</span>「読む」</div><div class="vci"><span class="vw">send</span>「送る」</div><div class="vci"><span class="vw">watch</span>「観る」</div><div class="vci"><span class="vw">live</span>「住む」</div><div class="vci"><span class="vw">clean</span>「掃除する」</div><div class="vci"><span class="vw">run</span>「走る」</div><div class="vci"><span class="vw">make</span>「作る」</div><div class="vci"><span class="vw">walk</span>「歩く」</div><div class="vci"><span class="vw">open</span>「開ける」</div><div class="vci"><span class="vw">swim</span>「泳ぐ」</div><div class="vci"><span class="vw">close</span>「閉じる」</div><div class="vci"><span class="vw">know</span>「知っている」</div><div class="vci"><span class="vw">sing</span>「歌う」</div><div class="vci"><span class="vw">look, see</span>「見る」</div></div></div>';
 
 var U1={}, U2={}, U3={};
@@ -443,9 +468,82 @@ U2[12]={t:"12. 受け身の文",
   nt: "🎉 中2 全単元完了！"
 };
 
+/* --- 中3 単元 --- */
+var U3_1_q1 = [
+  ["私は７才のころから英語を勉強しています。","I have studied English since I was seven years old."],
+  ["彼女は３時間ここにいます。","She has been here for three hours."],
+  ["健二は子どものころからそのネコを飼っています。","Kenji has kept that cat since he was a child."],
+  ["私は先週からずっとこのコンピューターを使っていません。","I haven't used this computer since last week."],
+  ["先週の日曜日からずっと雨が降っていません。","It hasn't rained since last Sunday."],
+  ["彼らは１年間数学を勉強していますか。― はい、勉強しています。","Have they studied math for a year? — Yes, they have."],
+  ["彼女は先週から彼女のおばのところに滞在していますか。― いいえ、滞在していません。","Has she stayed at her aunt's since last week? — No, she hasn't."],
+  ["彼女はどのくらいこの自転車を使っていますか。― １年間です。","How long has she used this bicycle? — For a year."],
+  ["彼はどのくらい彼女と知り合いですか。― ５年間です。","How long has he known her? — For five years."]
+];
+
+var U3_1_q2 = [
+  ["私は一度彼に会ったことがあります。","I have met him once."],
+  ["彼女はその自転車を何度も使ったことがあります。","She has used that bicycle many times."],
+  ["私たちは以前にその映画を観たことがあります。","We have seen that movie before."],
+  ["私は一度もピアノを弾いたことがありません。","I have never played the piano."],
+  ["私たちは一度も富士山に登ったことはありません。","We have never climbed Mt. Fuji."],
+  ["あなたは今までにテニスをしたことがありますか。― はい、あります。","Have you ever played tennis? — Yes, I have."],
+  ["彼女は今までに日本語を話したことがありますか。― いいえ、ありません。","Has she ever spoken Japanese? — No, she hasn't."],
+  ["あなたは久美に何回会ったことがありますか。― 私は３回彼女に会ったことがあります。","How many times have you met Kumi? — I have met her three times."],
+  ["彼らは何回アメリカを訪れたことがありますか。― 彼らは一度そこを訪れたことがあります。","How many times have they visited America? — They have visited there once."]
+];
+
+var U3_1_q3 = [
+  ["私の弟はすでに自分の部屋を掃除してしまいました。","My brother has already cleaned his room."],
+  ["私たちはちょうど家に帰ってきたところです。","We have just come home."],
+  ["彼女はまだ皿を洗っていません。","She hasn't washed the dishes yet."],
+  ["彼らはまだ駅に到着していません。","They haven't arrived at the station yet."],
+  ["あなたはもう宿題をしてしまいましたか。― はい、しました。","Have you done your homework yet? — Yes, I have."],
+  ["あなたの妹はもう起きていますか。― いいえ、まだ起きていません。","Has your sister gotten up yet? — No, she hasn't."],
+  ["私は腕時計をなくしてしまいました。","I have lost my watch."],
+  ["私のおじはカナダに行ってしまいました。","My uncle has gone to Canada."]
+];
+
 U3[1]={t:"1. 現在完了形",
-  g: function(){ return G("文法 ▶ 現在完了形","I "+e("have lived")+" in Kyoto for five years."+br+"She "+e("has visited")+" Kyoto three times."+br+"I "+e("have already finished")+" my homework.","☞ 基本形："+k("have(has)＋過去分詞")+"（①継続 ②経験 ③完了）"); },
-  q: [["私は７才のころから英語を勉強しています。","I have studied English since I was seven years old."],["彼女は３時間ここにいます。","She has been here for three hours."],["健二は子どものころからそのネコを飼っています。","Kenji has kept that cat since he was a child."],["私は一度彼に会ったことがあります。","I have met him once."],["彼女はその自転車を何度も使ったことがあります。","She has used that bicycle many times."],["私の弟はすでに自分の部屋を掃除してしまいました。","My brother has already cleaned his room."],["私たちはちょうど家に帰ってきたところです。","We have just come home."],["彼女はまだ皿を洗っていません。","She hasn't washed the dishes yet."]],
+  q: U3_1_q1.concat(U3_1_q2).concat(U3_1_q3),
+  customRender: function(){
+    var base='<div class="ifo" style="margin-bottom:14px"><strong>現在完了形の基本形：</strong> '+e("have(has)")+" ＋ 過去分詞 &nbsp;&nbsp;&nbsp;&nbsp; <span style='font-size:13px;color:#555'>3つの用法：①継続 ②経験 ③完了・結果</span></div>";
+    var stbar='<div class="stb-bar"><button class="stb a" onclick="showST(1,this)">① 継続用法</button><button class="stb" onclick="showST(2,this)">② 経験用法</button><button class="stb" onclick="showST(3,this)">③ 完了・結果用法</button></div>';
+
+    var s1='<div id="st1" class="stc">'+
+      G("継続用法「（ずっと）〜している」",
+        "I "+e("have lived")+" in Kyoto "+e("for")+" five years."+j("（私は５年間京都に住んでいます。）")+br+
+        "My father "+e("has been")+" busy "+e("since")+" last week."+j("（私の父は先週からずっと忙しいです。）"),
+        "☞ "+k("for＋期間")+"「〜のあいだ」 &nbsp;&nbsp; ☞ "+k("since＋起点")+"「〜から」"
+      )+
+      '<div class="ql">【演習問題：継続用法】</div>' +
+      renderQuestionSet(U3_1_q1, false, 0) +
+    '</div>';
+
+    var s2='<div id="st2" class="stc" style="display:none">'+
+      G("経験用法「〜したことがある」",
+        "I "+e("have visited")+" Kyoto three times."+j("（私は３回京都を訪れたことがあります。）")+br+
+        "She "+e("has been to")+" China before."+j("（彼女は以前に中国に行ったことがあります。）"),
+        "☞ "+k("have(has) been to〜")+"「〜に行ったことがある」"
+      )+
+      IF("<strong>✓ 経験用法でよく使われる語句</strong><br>"+k("once")+"「一度」 "+k("twice")+"「２回」自由 "+k("〜times")+"「〜回」 "+k("many times")+"「何度も」<br>"+k("before")+"「以前に」 "+k("ever")+"「今までに」check "+k("never")+"「一度も〜ない」")+
+      '<div class="ql">【演習問題：経験用法】</div>' +
+      renderQuestionSet(U3_1_q2, false, U3_1_q1.length) +
+    '</div>';
+
+    var s3='<div id="st3" class="stc" style="display:none">'+
+      G("完了・結果用法「〜してしまった・〜したところだ」",
+        "I "+e("have already finished")+" my homework."+j("（私はすでに宿題を終えてしまいました。）")+br+
+        "My father "+e("has just washed")+" his car."+j("（私の父はちょうど車を洗ったところです。）")+br+
+        "They "+e("have gone to")+" Hokkaido."+j("（彼らは北海道に行ってしまいました。）"),
+        "☞ "+k("just")+"「ちょうど」 &nbsp;&nbsp; ☞ "+k("already")+"「すでに、もう」 &nbsp;&nbsp; ☞ "+k("yet")+"「まだ／もう」"
+      )+
+      '<div class="ql">【演習問題：完了・結果用法】</div>' +
+      renderQuestionSet(U3_1_q3, false, U3_1_q1.length + U3_1_q2.length) +
+    '</div>';
+
+    return base + stbar + s1 + s2 + s3;
+  },
   nt: "2. 現在完了進行形"
 };
 
@@ -563,7 +661,11 @@ function renderCurrentUnit(){
     if(currentMode === 'test'){
       bodyContent = renderTestUI(d.q);
     } else {
-      bodyContent = d.g() + '<div class="ql">【演習問題】</div>' + renderQuestionSet(d.q, false);
+      if(typeof d.customRender === 'function'){
+        bodyContent = d.customRender();
+      } else {
+        bodyContent = d.g() + '<div class="ql">【演習問題】</div>' + renderQuestionSet(d.q, false);
+      }
     }
 
     var recordBtn = '<div style="text-align:center; margin-top:30px; padding-top:20px; border-top:1px dashed #ccc;"><button onclick="finishGrammarUnit(this)" style="background:#e8f1fb; border:2px solid #1a5fa8; padding:12px 24px; border-radius:8px; color:#1a5fa8; font-weight:bold; cursor:pointer; font-size:15px; box-shadow:0 2px 6px rgba(0,0,0,0.1); transition:0.2s;">✅ この単元の学習を記録する</button></div>';
@@ -629,7 +731,6 @@ async function gradeTest(){
   var unitTitleNode = document.querySelector('.lh');
   var unitTitle = unitTitleNode ? unitTitleNode.textContent : '中学英文法';
 
-  // 10問テストの点数を自動でFirebase履歴に送信
   if (window.sendLearningRecord) {
     await window.sendLearningRecord(unitTitle, `学習完了 (10問テスト: ${score}点 ${starStr})`);
   }

@@ -287,7 +287,7 @@ U1[8]={t:"8. What is this？",
 
 U1[9]={t:"9. 疑問詞＋is・疑問詞＋do",
   g: function(){ return G("文法 ▶ 疑問詞を使った疑問文",e("What is")+" this? / "+e("Who is")+" that? / "+e("Where")+" is your school? / "+e("When")+" is your birthday?","☞ 疑問詞を使った疑問文は"+k("疑問詞＋疑問文？")+"の形になります。"); },
-  q: [["これは何ですか。― それは鉛筆です。","What is this? — It is a pencil."],["あちらはだれですか。― あちらは私の弟です。","Who is that? — That is my brother."],["あなたはどこでサッカーをしますか。― 私は公園でします。","Where do you play soccer? — I play it in the park."],["コンサートはいつですか。― ７月５日です。","When is the concert? — It is on July 5."],["あなたはどのようにして公園に行きますか。― 私は自転車で行きます。","How do you go to the park? — I go by bicycle."]],
+  q: [["これは何ですか。― それは鉛筆です。","What is this? — It is a pencil."],["あちらはだれですか。― あちらは私の弟です。","Who is that? — That is my brother."],["あなたはどこでサッカーをしますか。― 私は公園でします。","Where do you play soccer? — I play it in the park."],["コンサートはいつですか。― ７月５日です。","When is the concert? — It is on July 5."],["あなたはどのようにして公園に行きますか。― 私は自転車で行きます。","How do you go to the park? — I go by bus."]],
   nt: "10. What＋名詞"
 };
 
@@ -321,6 +321,7 @@ U1[13]={t:"13. 人称代名詞",
     return g1 + PRTBL;
   },
   q: [
+    /* 基本問題 */
     ["彼は英語の先生です。（主格：〜は）", "He is an English teacher."],
     ["これは彼女のカメラです。（所有格：〜の）", "This is her camera."],
     ["私は彼を知っています。（目的格：〜を）", "I know him."],
@@ -328,7 +329,17 @@ U1[13]={t:"13. 人称代名詞",
     ["私たちは彼女の兄を知っています。（所有格：〜の）", "We know her brother."],
     ["久美は彼らに英語を教えます。（目的格：〜に）", "Kumi teaches them English."],
     ["その自転車は彼らのものです。（所有代名詞：〜のもの）", "That bicycle is theirs."],
-    ["彼女は毎日彼を助けます。（主格と目的格）", "She helps him every day."]
+    ["彼女は毎日彼を助けます。（主格と目的格）", "She helps him every day."],
+    
+    /* 発展問題（文脈判断・穴埋め） */
+    ["【発展】ブラウン先生を見なさい。( Look at Mr. Brown. ) 彼はとても背が高いです。[ he ]", "Look at Mr. Brown. He is very tall."],
+    ["【発展】これは健二のラケットです。( This is Kenji's racket. ) それは彼のものです。[ his ]", "This is Kenji's racket. It is his."],
+    ["【発展】私には2人の妹がいます。( I have two sisters. ) 私は彼女たちを愛しています。[ them ]", "I have two sisters. I love them."],
+    ["【発展】あの女の子を知っていますか。( Do you know that girl? ) 彼女の名前は何ですか。[ her ]", "Do you know that girl? What is her name?"],
+    ["【発展】この本は私のものです。( This book is mine. ) あなたのものはどこですか。[ yours ]", "This book is mine. Where is yours?"],
+    ["【発展】マイクと私は友達です。( Mike and I are friends. ) 私たちは野球をします。[ we ]", "Mike and I are friends. We play baseball."],
+    ["【発展】ゆみは犬を飼っています。( Yumi has a dog. ) 彼女は毎日それを散歩させます。[ it ]", "Yumi has a dog. She walks it every day."],
+    ["【発展】あれらはあなたたちのバッグです。( Those are your bags. ) それらはあなたたちのものです。[ yours ]", "Those are your bags. They are yours."]
   ],
   nt: "14. 助動詞 can"
 };
@@ -365,7 +376,7 @@ U1[18]={t:"18. 疑問詞",
 
 U2[1]={t:"1. be動詞の過去形",
   g: function(){ return G("文法 ▶ was・were（肯定文・疑問文・否定文）","I "+e("was")+" in Tokyo yesterday."+br+e("Was it")+" cold yesterday? — Yes, it "+e("was.")+" / No, it "+e("wasn't."),"☞ be動詞の過去形 "+k("was・were")+" は「〜でした、いました」という意味を表します。"); },
-  q: [["昨日は雨でした。","It was rainy yesterday."],["私たちは昨年は高校生でした。","We were high school students last year."],["私の弟と私は昨日の午後は忙しかった。","My brother and I were busy yesterday afternoon."],["彼女はクラスで人気がありましたか。― はい、人気がありました。","Was she popular in her class? — Yes, she was."],["あなたは昨年中国にいましたか。― いいえ、いませんでした。","Were you in China last year? — No, I wasn't."],["先週は暖かくありませんでした。","It wasn't warm last week."],["私たちはそのとき幸せではありませんでした。","We weren't happy then."],["彼らは３日前は日本にいませんでした。","They weren't in Japan three days ago."]],
+  q: [["昨日は雨でした。","It was rainy yesterday."],["私たちは昨年は高校生でした。","We were high school students last year."],["私の弟と私は昨日の午後は忙しかった。","My brother and I were busy yesterday afternoon."],["彼女はクラスで人気がありましたか。― はい、人気がありました。","Was she popular in her class? — Yes, she was."],["あなたは昨年中国にいましたか。― いいえ、いませんでした。","Were you in China last year? — No, I wasn't."],["先週は暖かくありませんでした。","It wasn't warm last week."],["私たちはそのとき幸せではありませんでした。","We weren't happy then."],["彼らは３年前は日本にいませんでした。","They weren't in Japan three days ago."]],
   nt: "2. 過去進行形"
 };
 

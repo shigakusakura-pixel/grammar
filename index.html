@@ -310,8 +310,26 @@ U1[12]={t:"12. 一般動詞②(三人称単数)",
 };
 
 U1[13]={t:"13. 人称代名詞",
-  g: function(){ return G("文法 ▶ 人称代名詞","This is Kumi. "+e("She")+" is from Japan.","☞ 人や物の名前の代わりに使う名詞を"+k("代名詞")+"といいます。")+PRTBL; },
-  q: [["彼（The boy）は健二です。","He is Kenji."],["これは彼女（Keiko）のカメラです。","This is her camera."],["私たち（Mike and I）はよい友達です。","We are good friends."],["私はそれら（these pens）を使います。","I use them."],["私は彼女（Lisa）の兄を知っています。","I know her brother."]],
+  g: function(){
+    var g1 = G("文法 ▶ 人称代名詞の4つの形と使い分け",
+      pt("主格（〜は・が）","#1a5fa8") + e("She") + " is a student." + j("（彼女は学生です。）") + "<br><span style='font-size:12.5px;color:#555'>👉 文の主語（一番前）になります。</span><br>" +
+      pt("所有格（〜の）","#d97706") + "This is " + e("her") + " camera." + j("（これは彼女のカメラです。）") + "<br><span style='font-size:12.5px;color:#555'>👉 必ず後ろに「名詞」が続きます。（her + camera）</span><br>" +
+      pt("目的格（〜を・に）","#27ae60") + "I know " + e("her") + "." + j("（私は彼女を知っています。）") + " / Look at " + e("him") + "." + j("（彼を見なさい。）") + "<br><span style='font-size:12.5px;color:#555'>👉 動詞や前置詞（at, for, withなど）の後ろに置きます。</span><br>" +
+      pt("所有代名詞（〜のもの）","#8e44ad") + "This computer is " + e("hers") + "." + j("（このコンピューターは彼女のものです。）") + "<br><span style='font-size:12.5px;color:#555'>👉 「所有格＋名詞」の代わりになり、単独で使えます。（hers ＝ her computer）</span>",
+      "☞ 人称代名詞は「だれが・だれの・だれを・だれのもの」によって形が変化します。"
+    );
+    return g1 + PRTBL;
+  },
+  q: [
+    ["彼は英語の先生です。（主格：〜は）", "He is an English teacher."],
+    ["これは彼女のカメラです。（所有格：〜の）", "This is her camera."],
+    ["私は彼を知っています。（目的格：〜を）", "I know him."],
+    ["このカバンは私のものです。（所有代名詞：〜のもの）", "This bag is mine."],
+    ["私たちは彼女の兄を知っています。（所有格：〜の）", "We know her brother."],
+    ["久美は彼らに英語を教えます。（目的格：〜に）", "Kumi teaches them English."],
+    ["その自転車は彼らのものです。（所有代名詞：〜のもの）", "That bicycle is theirs."],
+    ["彼女は毎日彼を助けます。（主格と目的格）", "She helps him every day."]
+  ],
   nt: "14. 助動詞 can"
 };
 

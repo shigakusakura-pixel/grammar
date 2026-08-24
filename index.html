@@ -111,26 +111,37 @@
 </div>
 
 <script>
-// === 🌟 生徒IDの記憶＆タブ切り替え時の自動復元 🌟 ===
-(function() {
+// === 🌟 生徒IDのグローバル固定保持 🌟 ===
+window.CURRENT_STUDENT_ID = (function() {
   const params = new URLSearchParams(window.location.search);
-  let sId = params.get('student') || params.get('id');
-
-  if (sId && sId !== 'guest' && sId !== 'ゲスト') {
-    // URLにIDがあればブラウザに保存
-    const fullId = sId.includes('@') ? sId : sId + '@shigaku.local';
-    localStorage.setItem('shigaku_student_id', fullId);
-  } else {
-    // タブ切り替え等でURLからIDが消えた場合、保存データからURLを自動修復
-    const saved = localStorage.getItem('shigaku_student_id');
-    if (saved && saved !== 'guest') {
-      const pureId = saved.split('@')[0];
-      const separator = window.location.search ? '&' : '?';
-      const newUrl = window.location.pathname + window.location.search + (window.location.search.includes('student=') ? '' : separator + 'student=' + encodeURIComponent(pureId)) + window.location.hash;
-      window.history.replaceState(null, '', newUrl);
-    }
+  let id = params.get('student') || params.get('id') || params.get('studentId');
+  
+  if (id && id !== 'guest' && id !== 'ゲスト') {
+    id = id.trim();
+    const fullId = id.includes('@') ? id : id + '@shigaku.local';
+    try { localStorage.setItem('shigaku_student_id', fullId); } catch(e){}
+    return fullId;
   }
+  
+  // URLに無ければブラウザ保存値から取得
+  let saved = '';
+  try { saved = localStorage.getItem('shigaku_student_id') || ''; } catch(e){}
+  if (saved && saved !== 'guest' && saved !== 'ゲスト') {
+    return saved.includes('@') ? saved : saved + '@shigaku.local';
+  }
+  
+  return "guest";
 })();
+
+// タブや単元を切り替えてもIDをURLに常時固定
+if (window.CURRENT_STUDENT_ID && window.CURRENT_STUDENT_ID !== "guest") {
+  const pureId = window.CURRENT_STUDENT_ID.split('@')[0];
+  const url = new URL(window.location.href);
+  if (url.searchParams.get('student') !== pureId) {
+    url.searchParams.set('student', pureId);
+    window.history.replaceState(null, '', url.toString());
+  }
+}
 
 var e=function(s){return'<span class="e">'+s+'</span>';};
 var j=function(s){return'<span class="j">'+s+'</span>';};

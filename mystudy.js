@@ -14,19 +14,36 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ① 生徒IDの取得（?student=teacher などの短縮IDもそのまま受け入れる）
-const urlParams = new URLSearchParams(window.location.search);
-let rawStudentId = urlParams.get('student') || urlParams.get('id');
+// ① 生徒IDの安全な取得
+function getStudentId() {
+  const urlParams = new URLSearchParams(window.location.search);
+  let id = urlParams.get('student') || urlParams.get('id') || urlParams.get('studentId');
+  
+  // ハッシュ（#?student=...）にある場合のフォールバック
+  if (!id && window.location.hash.includes('student=')) {
+    const hashParams = new URLSearchParams(window.location.hash.substring(window.location.hash.indexOf('?')));
+    id = hashParams.get('student');
+  }
 
-const PORTAL_URL = "https://shigakusakura-pixel.github.io/mystudyroom/";
+  // ローカルストレージからのフォールバック
+  if (!id) {
+    id = localStorage.getItem('shigaku_student_id') || localStorage.getItem('mystudy_student_id');
+  }
 
-// 完全な空欄・nullの場合のみポータルへ戻す
-if (!rawStudentId || rawStudentId.trim() === '') {
-  alert("ログインが必要です。ポータルへ戻ります。");
-  window.location.replace(PORTAL_URL);
+  return id ? id.trim() : "";
 }
 
-// @shigaku.local がついていない場合は付与して統一
+let rawStudentId = getStudentId();
+
+// 未ログイン時の遮断（完全に空の場合のみ）
+const PORTAL_URL = "https://shigakusakura-pixel.github.io/mystudyroom/";
+if (!rawStudentId) {
+  // アラートで止めず、自動でゲスト扱いにするかポータルへ戻す設定
+  console.warn("生徒IDが見つからないため、ゲストとして初期化します。");
+  rawStudentId = "guest";
+}
+
+// ドメイン補完
 const studentId = (rawStudentId && !rawStudentId.includes('@') && rawStudentId !== 'guest') 
   ? `${rawStudentId}@shigaku.local` 
   : rawStudentId;
@@ -44,7 +61,7 @@ function showLock() {
   return lock;
 }
 
-// ② 英文法用 送信関数
+// ② 送信関数
 window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
   const lock = showLock();
   try {
@@ -54,7 +71,7 @@ window.sendLearningRecord = async function(unitName, actionName = "学習完了"
       subject: subjectName,
       unit: unitName,
       action: actionName,
-      duration: duration, // 所要秒数を保存
+      duration: duration,
       timestamp: serverTimestamp()
     });
     lock.remove();

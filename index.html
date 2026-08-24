@@ -767,9 +767,24 @@ function renderTestUI(allQ){
     '<div id="test-result-box"></div>';
 }
 
+function renderTestUI(allQ){
+  var qHtml = testQuestions.map(function(qa, i){
+    return '<div class="qi">' +
+      '<div class="qr"><div class="qn">'+(i+1)+'</div><div class="qt">'+qa[0]+'</div></div>' +
+      '<div style="margin:8px 0 0 30px"><input type="text" id="test-input-'+i+'" style="width:80%; padding:6px; font-size:14px; border:1px solid #ccc; border-radius:4px" placeholder="英文を入力..."></div>' +
+    '</div>';
+  }).join('');
+
+  return '<div style="background:#fff3cd; padding:10px 14px; border-radius:6px; margin-bottom:14px; font-size:13.5px; color:#856404">🎯 <b>10問確認テスト</b>：英文を入力し、「採点する」ボタンを押してください。</div>' +
+    qHtml +
+    '<div style="text-align:center; margin:20px 0"><button onclick="gradeTest()" style="background:#28a745; color:#fff; border:none; padding:10px 30px; font-size:16px; font-weight:bold; border-radius:6px; cursor:pointer">💯 採点する</button></div>' +
+    '<div id="test-result-box"></div>';
+}
+
 // ===== 英文法 タイマー変数 =====
 let grammarStartTime = Date.now();
 
+// 10問テスト採点処理
 async function gradeTest(){
   var correctCount = 0;
   testQuestions.forEach(function(qa, i){
@@ -801,28 +816,23 @@ async function gradeTest(){
   var unitTitleNode = document.querySelector('.lh');
   var unitTitle = unitTitleNode ? unitTitleNode.textContent.trim() : '中学英文法';
 
- // index.html内の全送信処理（10問テスト・学習完了）を一括受信
-  window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
-    const finalId = getActiveStudentId();
-    
-    // ★ 誰として送信しようとしているかを画面に表示
-    alert("送信対象ID: " + finalId + "\n単元: " + unitName);
+  if (window.sendLearningRecord) {
+    const durationSec = Math.max(1, Math.floor((Date.now() - grammarStartTime) / 1000));
+    await window.sendLearningRecord(unitTitle, `10問テスト (${score}点 ${starStr})`, durationSec);
+    grammarStartTime = Date.now();
+  }
 
-    try {
-      await addDoc(collection(db, "learning_records"), {
-        studentId: finalId,
-        subject: "中学英語",
-        unit: unitName,
-        action: actionName,
-        duration: Number(duration) || 0,
-        timestamp: serverTimestamp()
-      });
-      console.log(`✅ 【英文法 Firebase直接送信成功】 対象: ${finalId} | 単元: ${unitName} | 時間: ${duration}秒`);
-    } catch(err) {
-      console.error("❌ 送信エラー:", err);
-      alert("送信エラー: " + err.message);
-    }
-  };
+  const resultBox = document.getElementById('test-result-box');
+  if (resultBox) {
+    resultBox.innerHTML = 
+      '<div class="test-score-box">' +
+        '<h3>テスト結果</h3>' +
+        '<div class="test-score-num">' + score + ' 点</div>' +
+        '<div class="test-stars">' + starStr + '</div>' +
+        '<p style="font-size:13px; color:#666; margin-top:8px">結果を学習ポータルに送信し、単元一覧に★を記録しました！</p>' +
+      '</div>';
+  }
+}
 
 // ===== 通常学習完了 送信処理 =====
 window.finishGrammarUnit = async function(btn) {

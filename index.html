@@ -776,17 +776,39 @@ async function gradeTest(){
 // ===== 英文法 タイマー＆送信処理 =====
   let grammarStartTime = Date.now();
 
+  // 10問テスト側の送信処理
+  if (window.sendLearningRecord) {
+    const durationSec = Math.floor((Date.now() - grammarStartTime) / 1000);
+    await window.sendLearningRecord(unitTitle, `10問テスト (${score}点 ${starStr})`, durationSec);
+    grammarStartTime = Date.now();
+  }
+
+  const resultBox = document.getElementById('test-result-box');
+  if (resultBox) {
+    resultBox.innerHTML = 
+      '<div class="test-score-box">' +
+        '<h3>テスト結果</h3>' +
+        '<div class="test-score-num">' + score + ' 点</div>' +
+        '<div class="test-stars">' + starStr + '</div>' +
+        '<p style="font-size:13px; color:#666; margin-top:8px">結果を学習ポータルに送信し、単元一覧に★を記録しました！</p>' +
+      '</div>';
+  }
+}
+
+  // 通常学習完了ボタンの処理
   window.finishGrammarUnit = async function(btn) {
     if (btn.disabled) return;
     var unitTitleNode = document.querySelector('.lh');
-    var unitTitle = unitTitleNode ? unitTitleNode.textContent : '中学英文法';
+    var unitTitle = unitTitleNode ? unitTitleNode.textContent.trim() : '中学英文法';
     
     if (window.sendLearningRecord) {
       btn.disabled = true;
       btn.textContent = "⏳ 送信中...";
 
       const durationSec = Math.floor((Date.now() - grammarStartTime) / 1000);
-      await window.sendLearningRecord(unitTitle, `学習完了 (${typeof currentMode !== 'undefined' ? currentMode : '通常'}モード)`, durationSec);
+      const modeName = typeof currentMode !== 'undefined' ? currentMode : '通常';
+      
+      await window.sendLearningRecord(unitTitle, `学習完了 (${modeName}モード)`, durationSec);
 
       btn.textContent = "✅ 記録しました！";
       btn.style.background = "#d4edda";
@@ -800,6 +822,6 @@ async function gradeTest(){
   if (typeof buildNav === 'function') buildNav(1);
   if (typeof goUnit === 'function') goUnit(1);
 </script>
-<script type="module" src="./mystudy.js?v=99"></script>
+<script type="module" src="./mystudy.js?v=20260824_final"></script>
 </body>
 </html>

@@ -14,12 +14,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ① 未ログイン遮断
+// ① 生徒IDの取得（URLパラメータ、またはローカルストレージから柔軟に取得）
 const urlParams = new URLSearchParams(window.location.search);
-const studentId = urlParams.get('student');
+let studentId = urlParams.get('student') || urlParams.get('id') || urlParams.get('studentId');
+
+// URLにない場合はポータル側の保存領域から取得
+if (!studentId) {
+  studentId = localStorage.getItem('shigaku_student_id') || localStorage.getItem('mystudy_student_id') || localStorage.getItem('currentStudentId');
+}
+
 const PORTAL_URL = "https://shigakusakura-pixel.github.io/mystudyroom/";
 
-if (!studentId || studentId === 'ゲスト' || studentId === 'guest' || studentId.trim() === '') {
+// IDが全く存在しない、または未入力の場合のみポータルへ戻す
+if (!studentId || studentId.trim() === '') {
   alert("ログイン（生徒IDの確認）が必要です。ポータルへ戻ります。");
   window.location.replace(PORTAL_URL);
 }
@@ -37,8 +44,8 @@ function showLock() {
   return lock;
 }
 
-// ② 英文法用 送信関数（durationを追加）
-window.sendResultToFirebase = async function(passedSubjectName, unitName, correct, total, duration = 0) {
+// ② 英文法用 送信関数
+window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
   const lock = showLock();
   try {
     const subjectName = "英文法";
@@ -46,16 +53,14 @@ window.sendResultToFirebase = async function(passedSubjectName, unitName, correc
       studentId: studentId,
       subject: subjectName,
       unit: unitName,
-      correct: correct,
-      total: total,
-      duration: duration, // 秒数を記録
-      action: "単元完了",
+      action: actionName,
+      duration: duration,
       timestamp: serverTimestamp()
     });
     lock.remove();
     
     const timeText = duration > 0 ? `（所要時間: ${Math.floor(duration / 60)}分${duration % 60}秒）` : '';
-    alert(`【記録完了】${unitName}（${correct}/${total}問正解）を保存しました！\n${timeText}`);
+    alert(`【記録完了】${unitName} の学習を記録しました！\n${timeText}`);
   } catch (e) {
     console.error("保存失敗:", e);
     lock.remove();

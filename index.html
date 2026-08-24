@@ -801,24 +801,28 @@ async function gradeTest(){
   var unitTitleNode = document.querySelector('.lh');
   var unitTitle = unitTitleNode ? unitTitleNode.textContent.trim() : '中学英文法';
 
-  // 10問テストのFirebase送信
-  if (window.sendLearningRecord) {
-    const durationSec = Math.max(1, Math.floor((Date.now() - grammarStartTime) / 1000));
-    await window.sendLearningRecord(unitTitle, `10問テスト (${score}点 ${starStr})`, durationSec);
-    grammarStartTime = Date.now();
-  }
+ // index.html内の全送信処理（10問テスト・学習完了）を一括受信
+  window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
+    const finalId = getActiveStudentId();
+    
+    // ★ 誰として送信しようとしているかを画面に表示
+    alert("送信対象ID: " + finalId + "\n単元: " + unitName);
 
-  const resultBox = document.getElementById('test-result-box');
-  if (resultBox) {
-    resultBox.innerHTML = 
-      '<div class="test-score-box">' +
-        '<h3>テスト結果</h3>' +
-        '<div class="test-score-num">' + score + ' 点</div>' +
-        '<div class="test-stars">' + starStr + '</div>' +
-        '<p style="font-size:13px; color:#666; margin-top:8px">結果を学習ポータルに送信し、単元一覧に★を記録しました！</p>' +
-      '</div>';
-  }
-}
+    try {
+      await addDoc(collection(db, "learning_records"), {
+        studentId: finalId,
+        subject: "中学英語",
+        unit: unitName,
+        action: actionName,
+        duration: Number(duration) || 0,
+        timestamp: serverTimestamp()
+      });
+      console.log(`✅ 【英文法 Firebase直接送信成功】 対象: ${finalId} | 単元: ${unitName} | 時間: ${duration}秒`);
+    } catch(err) {
+      console.error("❌ 送信エラー:", err);
+      alert("送信エラー: " + err.message);
+    }
+  };
 
 // ===== 通常学習完了 送信処理 =====
 window.finishGrammarUnit = async function(btn) {

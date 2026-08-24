@@ -840,13 +840,64 @@ window.finishGrammarUnit = async function(btn) {
     btn.style.color = "#155724";
 
     grammarStartTime = Date.now();
-  }
-};
+ }
+  };
 
-// 初期表示
-if (typeof buildNav === 'function') buildNav(1);
-if (typeof goUnit === 'function') goUnit(1);
+  // 初期表示
+  if (typeof buildNav === 'function') buildNav(1);
+  if (typeof goUnit === 'function') goUnit(1);
 </script>
-<script type="module" src="./mystudy.js?v=20260824_v4"></script>
+
+<!-- ★ 英文法専用：直接Firebase送信モジュール（ゲスト化を完全防止） -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBQjnlOfeVvWQJHDxGE9cq-jGsYF3uo0PY",
+    authDomain: "mystudy-portal.firebaseapp.com",
+    projectId: "mystudy-portal",
+    storageBucket: "mystudy-portal.firebasestorage.app",
+    messagingSenderId: "62253255474",
+    appId: "1:62253255474:web:817a3cbd1ab3ea63e7e52b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  function getActiveStudentId() {
+    const params = new URLSearchParams(window.location.search);
+    let s = params.get('student') || params.get('id') || params.get('studentId');
+    
+    if (!s || s === 'guest' || s === 'ゲスト') {
+      try {
+        s = localStorage.getItem('shigaku_student_id');
+      } catch(e){}
+    }
+    
+    if (!s || s === 'guest' || s === 'ゲスト') return "guest";
+    s = s.trim();
+    return s.includes('@') ? s : `${s}@shigaku.local`;
+  }
+
+  // index.html内の全送信処理（10問テスト・学習完了）をこの関数で一括受信
+  window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
+    const finalId = getActiveStudentId();
+    
+    try {
+      await addDoc(collection(db, "learning_records"), {
+        studentId: finalId,
+        subject: "中学英語",
+        unit: unitName,
+        action: actionName,
+        duration: Number(duration) || 0,
+        timestamp: serverTimestamp()
+      });
+      console.log(`✅ 【英文法 Firebase直接送信成功】 対象: ${finalId} | 単元: ${unitName} | 時間: ${duration}秒`);
+    } catch(err) {
+      console.error("❌ 送信エラー:", err);
+    }
+  };
+</script>
 </body>
 </html>

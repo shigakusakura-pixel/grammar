@@ -14,17 +14,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// 生徒IDの安全な抽出関数
+// IDをURLとlocalStorageの両方から徹底的に探す
 function getCurrentStudentId() {
   const urlParams = new URLSearchParams(window.location.search);
   let id = urlParams.get('student') || urlParams.get('id') || urlParams.get('studentId');
   
-  if (!id && window.location.hash.includes('student=')) {
-    const hashParams = new URLSearchParams(window.location.hash.substring(window.location.hash.indexOf('?')));
-    id = hashParams.get('student');
-  }
-
-  if (!id) {
+  if (!id || id === 'guest' || id === 'ゲスト') {
     id = localStorage.getItem('shigaku_student_id') || localStorage.getItem('mystudy_student_id');
   }
 
@@ -38,7 +33,7 @@ function getCurrentStudentId() {
 
 // ② 英文法用 送信関数
 window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
-  const currentId = getCurrentStudentId(); // 送信時に確実にIDを特定
+  const currentId = getCurrentStudentId();
   try {
     const subjectName = "中学英語";
     await addDoc(collection(db, "learning_records"), {

@@ -14,22 +14,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ① 生徒IDの取得（URLパラメータ、またはローカルストレージから柔軟に取得）
+// ① 生徒IDの取得（?student=teacher などの短縮IDもそのまま受け入れる）
 const urlParams = new URLSearchParams(window.location.search);
-let studentId = urlParams.get('student') || urlParams.get('id') || urlParams.get('studentId');
-
-// URLにない場合はポータル側の保存領域から取得
-if (!studentId) {
-  studentId = localStorage.getItem('shigaku_student_id') || localStorage.getItem('mystudy_student_id') || localStorage.getItem('currentStudentId');
-}
+let rawStudentId = urlParams.get('student') || urlParams.get('id');
 
 const PORTAL_URL = "https://shigakusakura-pixel.github.io/mystudyroom/";
 
-// IDが全く存在しない、または未入力の場合のみポータルへ戻す
-if (!studentId || studentId.trim() === '') {
-  alert("ログイン（生徒IDの確認）が必要です。ポータルへ戻ります。");
+// 完全な空欄・nullの場合のみポータルへ戻す
+if (!rawStudentId || rawStudentId.trim() === '') {
+  alert("ログインが必要です。ポータルへ戻ります。");
   window.location.replace(PORTAL_URL);
 }
+
+// @shigaku.local がついていない場合は付与して統一
+const studentId = (rawStudentId && !rawStudentId.includes('@') && rawStudentId !== 'guest') 
+  ? `${rawStudentId}@shigaku.local` 
+  : rawStudentId;
 
 // 画面ロック表示
 function showLock() {
@@ -54,7 +54,7 @@ window.sendLearningRecord = async function(unitName, actionName = "学習完了"
       subject: subjectName,
       unit: unitName,
       action: actionName,
-      duration: duration,
+      duration: duration, // 所要秒数を保存
       timestamp: serverTimestamp()
     });
     lock.remove();

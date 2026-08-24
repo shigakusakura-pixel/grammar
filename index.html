@@ -705,17 +705,36 @@ function goUnit(n){
   renderCurrentUnit();
 }
 
+// ===== 全モード共通 入力クリア処理 =====
+window.clearCurrentUnitInputs = function() {
+  document.querySelectorAll('#ct input[type="text"]').forEach(function(input) {
+    input.value = '';
+    input.style.borderColor = '#ccc';
+    input.style.background = '#fff';
+  });
+  document.querySelectorAll('[id^="test-feedback-"]').forEach(function(el) {
+    el.innerHTML = '';
+  });
+  const resultBox = document.getElementById('test-result-box');
+  if (resultBox) resultBox.innerHTML = '';
+  
+  renderCurrentUnit();
+};
+
 function renderCurrentUnit(){
   var d=DATA[curGrade][curUnitIdx];
   var html;
   if(d){
     var gl=curGrade===1?"中 1":curGrade===2?"中 2":"中 3";
     
-    var modeBar = '<div class="mode-bar">' +
-      '<button id="btn-mode-arrange" class="mb '+(currentMode==='arrange'?'a':'')+'" onclick="setMode(\'arrange\')">🧩 並べ替え</button>' +
-      '<button id="btn-mode-fill" class="mb '+(currentMode==='fill'?'a':'')+'" onclick="setMode(\'fill\')">✏️ 穴埋め</button>' +
-      '<button id="btn-mode-translate" class="mb '+(currentMode==='translate'?'a':'')+'" onclick="setMode(\'translate\')">✍️ 英作文</button>' +
-      '<button id="btn-mode-test" class="mb '+(currentMode==='test'?'a':'')+'" onclick="startTestMode()">🎯 10問テスト</button>' +
+    var modeBar = '<div class="mode-bar" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px;">' +
+      '<div>' +
+        '<button id="btn-mode-arrange" class="mb '+(currentMode==='arrange'?'a':'')+'" onclick="setMode(\'arrange\')">🧩 並べ替え</button>' +
+        '<button id="btn-mode-fill" class="mb '+(currentMode==='fill'?'a':'')+'" onclick="setMode(\'fill\')">✏️ 穴埋め</button>' +
+        '<button id="btn-mode-translate" class="mb '+(currentMode==='translate'?'a':'')+'" onclick="setMode(\'translate\')">✍️ 英作文</button>' +
+        '<button id="btn-mode-test" class="mb '+(currentMode==='test'?'a':'')+'" onclick="startTestMode()">🎯 10問テスト</button>' +
+      '</div>' +
+      '<button onclick="clearCurrentUnitInputs()" style="background:#f8f9fa; border:1px solid #ced4da; color:#495057; padding:6px 14px; border-radius:6px; font-size:13px; font-weight:bold; cursor:pointer; transition:0.2s;" onmouseover="this.style.background=\'#e2e6ea\'" onmouseout="this.style.background=\'#f8f9fa\'">🗑️ 入力をクリア</button>' +
     '</div>';
 
     var bodyContent = '';

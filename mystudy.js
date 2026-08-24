@@ -14,37 +14,42 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-function getStudentId() {
+// 生徒IDの安全な抽出関数
+function getCurrentStudentId() {
   const urlParams = new URLSearchParams(window.location.search);
   let id = urlParams.get('student') || urlParams.get('id') || urlParams.get('studentId');
+  
   if (!id && window.location.hash.includes('student=')) {
     const hashParams = new URLSearchParams(window.location.hash.substring(window.location.hash.indexOf('?')));
     id = hashParams.get('student');
   }
+
   if (!id) {
     id = localStorage.getItem('shigaku_student_id') || localStorage.getItem('mystudy_student_id');
   }
-  return id ? id.trim() : "";
+
+  id = id ? id.trim() : "guest";
+
+  if (id !== "guest" && !id.includes('@')) {
+    id = `${id}@shigaku.local`;
+  }
+  return id;
 }
 
-let rawStudentId = getStudentId() || "guest";
-const studentId = (rawStudentId && !rawStudentId.includes('@') && rawStudentId !== 'guest') 
-  ? `${rawStudentId}@shigaku.local` 
-  : rawStudentId;
-
-// ② 英文法用 送信関数（教科名を「中学英語（英文法）」として保存）
+// ② 英文法用 送信関数
 window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
+  const currentId = getCurrentStudentId(); // 送信時に確実にIDを特定
   try {
-    const subjectName = "中学英語"; // 管理画面の英語バー（赤色）に確実に集計される名称
+    const subjectName = "中学英語";
     await addDoc(collection(db, "learning_records"), {
-      studentId: studentId,
+      studentId: currentId,
       subject: subjectName,
       unit: unitName,
       action: actionName,
       duration: duration,
       timestamp: serverTimestamp()
     });
-    console.log("学習記録を保存しました:", unitName, duration + "秒");
+    console.log(`【記録完了】送信先ID: ${currentId} / 単元: ${unitName} / 時間: ${duration}秒`);
   } catch (e) {
     console.error("保存失敗:", e);
   }

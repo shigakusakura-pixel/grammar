@@ -32,10 +32,10 @@ const studentId = (rawStudentId && !rawStudentId.includes('@') && rawStudentId !
   ? `${rawStudentId}@shigaku.local` 
   : rawStudentId;
 
-// ② 送信関数（ポップアップは出さず、ボタン側の表示変更のみで静かに記録）
+// ② 英文法用 送信関数（教科名を「中学英語（英文法）」として保存）
 window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
   try {
-    const subjectName = "英文法";
+    const subjectName = "中学英語"; // 管理画面の英語バー（赤色）に確実に集計される名称
     await addDoc(collection(db, "learning_records"), {
       studentId: studentId,
       subject: subjectName,

@@ -891,12 +891,6 @@ window.finishGrammarUnit = async function(btn) {
 
   grammarStartTime = Date.now();
 };
-
-// 初期表示
-if (typeof buildNav === 'function') buildNav(1);
-if (typeof goUnit === 'function') goUnit(1);
-</script>
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -913,39 +907,44 @@ if (typeof goUnit === 'function') goUnit(1);
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Safari・全ブラウザ共通：ID判定ロジック
+  // 生徒IDの安全な取得とスマホSafari用フォールバック
   function getSafeStudentId() {
-    // 1. URLパラメータ (?student=...)
     const params = new URLSearchParams(window.location.search);
     let s = params.get('student') || params.get('id') || params.get('studentId');
-    
-    // 2. Safariのハッシュ (#student=...)
+
     if (!s && window.location.hash) {
       const hashText = window.location.hash.replace(/^#/, '');
       const hashParams = new URLSearchParams(hashText.includes('=') ? hashText : 'student=' + hashText);
       s = hashParams.get('student') || hashParams.get('id');
     }
 
-    // 3. グローバル保持変数
-    if (!s && window.CURRENT_STUDENT_ID && window.CURRENT_STUDENT_ID !== 'guest') {
-      s = window.CURRENT_STUDENT_ID;
-    }
-
-    // 4. ローカルストレージ
     if (!s || s === 'guest' || s === 'ゲスト') {
       try {
         s = localStorage.getItem('shigaku_student_id');
       } catch(e){}
     }
-    
-    if (!s || s === 'guest' || s === 'ゲスト') return "guest";
+
+    // もしそれでも取れず「guest」になりそうな場合、プロンプトで名前/IDを尋ねて記憶する
+    if (!s || s === 'guest' || s === 'ゲスト') {
+      s = prompt("【学習記録】お名前（または生徒ID）を入力してください：");
+      if (s && s.trim() !== "") {
+        s = s.trim();
+        try {
+          localStorage.setItem('shigaku_student_id', s);
+        } catch(e){}
+      } else {
+        s = "guest";
+      }
+    }
+
     s = s.trim();
     return s.includes('@') ? s : `${s}@shigaku.local`;
   }
 
-  // 英文法用 送信関数
+  // 送信処理（確実にカルテへ送信）
   window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
     const finalId = getSafeStudentId();
+    
     try {
       await addDoc(collection(db, "learning_records"), {
         studentId: finalId,
@@ -963,3 +962,8 @@ if (typeof goUnit === 'function') goUnit(1);
 </script>
 </body>
 </html>
+// 初期表示
+if (typeof buildNav === 'function') buildNav(1);
+if (typeof goUnit === 'function') goUnit(1);
+</script>
+

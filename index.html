@@ -773,37 +773,33 @@ async function gradeTest(){
     '</div>';
 }
 
-// ===== 英文法 タイマー計測処理 =====
+// ===== 英文法 タイマー＆送信処理 =====
   let grammarStartTime = Date.now();
 
-  // 単元を切り替えたらタイマーリセット
-  const originalGoUnit = typeof goUnit === 'function' ? goUnit : null;
-  if (originalGoUnit) {
-    goUnit = function(unitNum) {
-      grammarStartTime = Date.now(); // タイマーリセット
-      return originalGoUnit(unitNum);
-    };
-  }
+  window.finishGrammarUnit = async function(btn) {
+    if (btn.disabled) return;
+    var unitTitleNode = document.querySelector('.lh');
+    var unitTitle = unitTitleNode ? unitTitleNode.textContent : '中学英文法';
+    
+    if (window.sendLearningRecord) {
+      btn.disabled = true;
+      btn.textContent = "⏳ 送信中...";
 
-  // 送信処理（所要時間を計算して渡す）
-  if (window.sendLearningRecord) {
-    btn.disabled = true;
-    btn.textContent = "⏳ 送信中...";
-    
-    // かかった秒数を計算
-    const durationSec = Math.floor((Date.now() - grammarStartTime) / 1000);
-    
-    await window.sendLearningRecord(unitTitle, `学習完了 (${currentMode}モード)`, durationSec);
-    
-    btn.textContent = "✅ 記録しました！";
-    btn.style.background = "#d4edda";
-    btn.style.color = "#155724";
-    grammarStartTime = Date.now(); // 送信後にリセット
-  }
-}
+      const durationSec = Math.floor((Date.now() - grammarStartTime) / 1000);
+      await window.sendLearningRecord(unitTitle, `学習完了 (${typeof currentMode !== 'undefined' ? currentMode : '通常'}モード)`, durationSec);
 
-buildNav(1);
-goUnit(1);
-<script type="module" src="./mystudy.js?v=2"></script>
+      btn.textContent = "✅ 記録しました！";
+      btn.style.background = "#d4edda";
+      btn.style.color = "#155724";
+
+      grammarStartTime = Date.now();
+    }
+  };
+
+  // 初期表示
+  if (typeof buildNav === 'function') buildNav(1);
+  if (typeof goUnit === 'function') goUnit(1);
+</script>
+<script type="module" src="./mystudy.js?v=3"></script>
 </body>
 </html>

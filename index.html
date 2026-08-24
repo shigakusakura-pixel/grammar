@@ -830,29 +830,28 @@ window.finishGrammarUnit = async function(btn) {
   var unitTitleNode = document.querySelector('.lh');
   var unitTitle = unitTitleNode ? unitTitleNode.textContent.trim() : '中学英文法';
   
+  btn.disabled = true;
+  btn.textContent = "⏳ 送信中...";
+
+  const durationSec = Math.max(1, Math.floor((Date.now() - grammarStartTime) / 1000));
+  const modeName = typeof currentMode !== 'undefined' ? currentMode : '通常';
+  
   if (window.sendLearningRecord) {
-    btn.disabled = true;
-    btn.textContent = "⏳ 送信中...";
-
-    const durationSec = Math.max(1, Math.floor((Date.now() - grammarStartTime) / 1000));
-    const modeName = typeof currentMode !== 'undefined' ? currentMode : '通常';
-    
     await window.sendLearningRecord(unitTitle, `学習完了 (${modeName}モード)`, durationSec);
+  }
 
-    btn.textContent = "✅ 記録しました！";
-    btn.style.background = "#d4edda";
-    btn.style.color = "#155724";
+  btn.textContent = "✅ 記録しました！";
+  btn.style.background = "#d4edda";
+  btn.style.color = "#155724";
 
-    grammarStartTime = Date.now();
- }
-  };
+  grammarStartTime = Date.now();
+};
 
-  // 初期表示
-  if (typeof buildNav === 'function') buildNav(1);
-  if (typeof goUnit === 'function') goUnit(1);
+// 初期表示
+if (typeof buildNav === 'function') buildNav(1);
+if (typeof goUnit === 'function') goUnit(1);
 </script>
 
-<!-- ★ 英文法専用：直接Firebase送信モジュール（ゲスト化を完全防止） -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -872,22 +871,18 @@ window.finishGrammarUnit = async function(btn) {
   function getActiveStudentId() {
     const params = new URLSearchParams(window.location.search);
     let s = params.get('student') || params.get('id') || params.get('studentId');
-    
     if (!s || s === 'guest' || s === 'ゲスト') {
       try {
         s = localStorage.getItem('shigaku_student_id');
       } catch(e){}
     }
-    
     if (!s || s === 'guest' || s === 'ゲスト') return "guest";
     s = s.trim();
     return s.includes('@') ? s : `${s}@shigaku.local`;
   }
 
-  // index.html内の全送信処理（10問テスト・学習完了）をこの関数で一括受信
   window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
     const finalId = getActiveStudentId();
-    
     try {
       await addDoc(collection(db, "learning_records"), {
         studentId: finalId,
@@ -897,7 +892,7 @@ window.finishGrammarUnit = async function(btn) {
         duration: Number(duration) || 0,
         timestamp: serverTimestamp()
       });
-      console.log(`✅ 【英文法 Firebase直接送信成功】 対象: ${finalId} | 単元: ${unitName} | 時間: ${duration}秒`);
+      console.log(`✅ 送信完了: ${finalId} | ${unitName} | ${duration}秒`);
     } catch(err) {
       console.error("❌ 送信エラー:", err);
     }

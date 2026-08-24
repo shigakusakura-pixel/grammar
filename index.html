@@ -878,21 +878,39 @@ if (typeof goUnit === 'function') goUnit(1);
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  function getActiveStudentId() {
+  // Safari・全ブラウザ共通：ID判定ロジック
+  function getSafeStudentId() {
+    // 1. URLパラメータ (?student=...)
     const params = new URLSearchParams(window.location.search);
     let s = params.get('student') || params.get('id') || params.get('studentId');
+    
+    // 2. Safariのハッシュ (#student=...)
+    if (!s && window.location.hash) {
+      const hashText = window.location.hash.replace(/^#/, '');
+      const hashParams = new URLSearchParams(hashText.includes('=') ? hashText : 'student=' + hashText);
+      s = hashParams.get('student') || hashParams.get('id');
+    }
+
+    // 3. グローバル保持変数
+    if (!s && window.CURRENT_STUDENT_ID && window.CURRENT_STUDENT_ID !== 'guest') {
+      s = window.CURRENT_STUDENT_ID;
+    }
+
+    // 4. ローカルストレージ
     if (!s || s === 'guest' || s === 'ゲスト') {
       try {
         s = localStorage.getItem('shigaku_student_id');
       } catch(e){}
     }
+    
     if (!s || s === 'guest' || s === 'ゲスト') return "guest";
     s = s.trim();
     return s.includes('@') ? s : `${s}@shigaku.local`;
   }
 
+  // 英文法用 送信関数
   window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
-    const finalId = getActiveStudentId();
+    const finalId = getSafeStudentId();
     try {
       await addDoc(collection(db, "learning_records"), {
         studentId: finalId,
@@ -902,7 +920,7 @@ if (typeof goUnit === 'function') goUnit(1);
         duration: Number(duration) || 0,
         timestamp: serverTimestamp()
       });
-      console.log(`✅ 送信完了: ${finalId} | ${unitName} | ${duration}秒`);
+      console.log(`✅ 【送信完了】 ID: ${finalId} | 単元: ${unitName} | 時間: ${duration}秒`);
     } catch(err) {
       console.error("❌ 送信エラー:", err);
     }

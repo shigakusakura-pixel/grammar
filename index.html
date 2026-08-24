@@ -776,10 +776,10 @@ async function gradeTest(){
 // ===== 英文法 タイマー＆送信処理 =====
   let grammarStartTime = Date.now();
 
-  // 10問テスト側の送信処理
+// 10問テストの送信処理
   if (window.sendLearningRecord) {
-    const durationSec = Math.floor((Date.now() - grammarStartTime) / 1000);
-    await window.sendLearningRecord(unitTitle, `10問テスト (${score}点 ${starStr})`, durationSec);
+    const durationSec = Math.max(1, Math.floor((Date.now() - grammarStartTime) / 1000));
+    window.sendLearningRecord(unitTitle, `10問テスト (${score}点 ${starStr})`, durationSec);
     grammarStartTime = Date.now();
   }
 
@@ -795,33 +795,35 @@ async function gradeTest(){
   }
 }
 
-  // 通常学習完了ボタンの処理
-  window.finishGrammarUnit = async function(btn) {
-    if (btn.disabled) return;
-    var unitTitleNode = document.querySelector('.lh');
-    var unitTitle = unitTitleNode ? unitTitleNode.textContent.trim() : '中学英文法';
+// ===== 英文法 タイマー＆通常学習完了 送信処理 =====
+let grammarStartTime = Date.now();
+
+window.finishGrammarUnit = async function(btn) {
+  if (btn.disabled) return;
+  var unitTitleNode = document.querySelector('.lh');
+  var unitTitle = unitTitleNode ? unitTitleNode.textContent.trim() : '中学英文法';
+  
+  if (window.sendLearningRecord) {
+    btn.disabled = true;
+    btn.textContent = "⏳ 送信中...";
+
+    const durationSec = Math.max(1, Math.floor((Date.now() - grammarStartTime) / 1000));
+    const modeName = typeof currentMode !== 'undefined' ? currentMode : '通常';
     
-    if (window.sendLearningRecord) {
-      btn.disabled = true;
-      btn.textContent = "⏳ 送信中...";
+    await window.sendLearningRecord(unitTitle, `学習完了 (${modeName}モード)`, durationSec);
 
-      const durationSec = Math.floor((Date.now() - grammarStartTime) / 1000);
-      const modeName = typeof currentMode !== 'undefined' ? currentMode : '通常';
-      
-      await window.sendLearningRecord(unitTitle, `学習完了 (${modeName}モード)`, durationSec);
+    btn.textContent = "✅ 記録しました！";
+    btn.style.background = "#d4edda";
+    btn.style.color = "#155724";
 
-      btn.textContent = "✅ 記録しました！";
-      btn.style.background = "#d4edda";
-      btn.style.color = "#155724";
+    grammarStartTime = Date.now();
+  }
+};
 
-      grammarStartTime = Date.now();
-    }
-  };
-
-  // 初期表示
-  if (typeof buildNav === 'function') buildNav(1);
-  if (typeof goUnit === 'function') goUnit(1);
+// 初期表示
+if (typeof buildNav === 'function') buildNav(1);
+if (typeof goUnit === 'function') goUnit(1);
 </script>
-<script type="module" src="./mystudy.js?v=20260824_final"></script>
+<script type="module" src="./mystudy.js?v=20260824_v3"></script>
 </body>
 </html>

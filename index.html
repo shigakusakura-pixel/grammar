@@ -111,38 +111,6 @@
 </div>
 
 <script>
-// === 🌟 生徒IDのグローバル固定保持 🌟 ===
-window.CURRENT_STUDENT_ID = (function() {
-  const params = new URLSearchParams(window.location.search);
-  let id = params.get('student') || params.get('id') || params.get('studentId');
-  
-  if (id && id !== 'guest' && id !== 'ゲスト') {
-    id = id.trim();
-    const fullId = id.includes('@') ? id : id + '@shigaku.local';
-    try { localStorage.setItem('shigaku_student_id', fullId); } catch(e){}
-    return fullId;
-  }
-  
-  // URLに無ければブラウザ保存値から取得
-  let saved = '';
-  try { saved = localStorage.getItem('shigaku_student_id') || ''; } catch(e){}
-  if (saved && saved !== 'guest' && saved !== 'ゲスト') {
-    return saved.includes('@') ? saved : saved + '@shigaku.local';
-  }
-  
-  return "guest";
-})();
-
-// タブや単元を切り替えてもIDをURLに常時固定
-if (window.CURRENT_STUDENT_ID && window.CURRENT_STUDENT_ID !== "guest") {
-  const pureId = window.CURRENT_STUDENT_ID.split('@')[0];
-  const url = new URL(window.location.href);
-  if (url.searchParams.get('student') !== pureId) {
-    url.searchParams.set('student', pureId);
-    window.history.replaceState(null, '', url.toString());
-  }
-}
-
 var e=function(s){return'<span class="e">'+s+'</span>';};
 var j=function(s){return'<span class="j">'+s+'</span>';};
 var k=function(s){return'<span class="k">'+s+'</span>';};
@@ -898,6 +866,7 @@ if (typeof goUnit === 'function') goUnit(1);
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -910,47 +879,31 @@ if (typeof goUnit === 'function') goUnit(1);
   };
 
   const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
   const db = getFirestore(app);
+  const PORTAL_URL = "https://shigakusakura-pixel.github.io/mystudyroom/";
 
-  // 生徒IDの安全な取得とスマホSafari用フォールバック
-  function getSafeStudentId() {
-    const params = new URLSearchParams(window.location.search);
-    let s = params.get('student') || params.get('id') || params.get('studentId');
-
-    if (!s && window.location.hash) {
-      const hashText = window.location.hash.replace(/^#/, '');
-      const hashParams = new URLSearchParams(hashText.includes('=') ? hashText : 'student=' + hashText);
-      s = hashParams.get('student') || hashParams.get('id');
-    }
-
-    if (!s || s === 'guest' || s === 'ゲスト') {
-      try {
-        s = localStorage.getItem('shigaku_student_id');
-      } catch(e){}
-    }
-
-    if (!s || s === 'guest' || s === 'ゲスト') {
-      s = prompt("【学習記録】お名前（または生徒ID）を入力してください：");
-      if (s && s.trim() !== "") {
-        s = s.trim();
-        try {
-          localStorage.setItem('shigaku_student_id', s);
-        } catch(e){}
-      } else {
-        s = "guest";
+  const authenticatedUserPromise = new Promise((resolve, reject) => {
+    let unsubscribe = () => {};
+    unsubscribe = onAuthStateChanged(auth, (user) => {
+      unsubscribe();
+      if (user && user.email) {
+        resolve(user);
+        return;
       }
-    }
+      alert("ログインが必要です。ポータルへ戻ります。");
+      window.location.replace(PORTAL_URL);
+      reject(new Error("Firebase Authenticationのログイン情報がありません。"));
+    }, reject);
+  });
 
-    s = s.trim();
-    return s.includes('@') ? s : `${s}@shigaku.local`;
-  }
-
-  // 送信処理（確実にカルテへ送信）
+  // 送信処理（Firebase認証済みの本人として保存）
   window.sendLearningRecord = async function(unitName, actionName = "学習完了", duration = 0) {
-    const finalId = getSafeStudentId();
-    
     try {
+      const user = await authenticatedUserPromise;
+      const finalId = user.email.trim().toLowerCase();
       await addDoc(collection(db, "learning_records"), {
+        uid: user.uid,
         studentId: finalId,
         subject: "中学英語",
         unit: unitName,
